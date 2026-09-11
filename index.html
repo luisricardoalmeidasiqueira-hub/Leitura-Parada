@@ -1,1112 +1,633 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Imóveis Vagos</title>
-<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAEC0lEQVR4nO3d0XETMRSFYYWhhLzjiuAdakg1qYEC6MgFpAgeljGO12ct2yvpXp3/ewxhZlf6cxdNNuHl2/efBbjmy+gLQFzEAYk4IBEHJOKARByQiAMScUAiDkjEAYk4IBEHJOKARByQiAMScUAiDkjEAYk4IBEHJOKARByQiAMScUAiDkjEAYk4IBEHJOKARByQiAMScUAiDkjEAYk4IBEHJOKARByQiAMScXxy/PN79CUEQhz/LWXQxwlx/HPeBH0siKOUazXQRynlxfx3n9+M4PDjV58rCch6ctSMB+cR4htH/a7b9mEax7377dmHYxyP7bRhH3ZxPLPHbn0YnVZ23FqTI4zL5Nj3i95khFjE0WIvHfqYP452uzh9H5PH0Xr/5u5j5jj67NzEfUwbR889m7WPCY+yA7dqsiPubJNj7BfxZCNkqjgi7E2Ea9jLPHHE2ZU4V/KkSeKIth/RrucxM8QRcydiXtVdcp9WUmxA3iNM4smRooyS5zrXssaRa8VzXe1JyjgyrnXGa84XR8ZVXqS78mRxpFvfC7muP1McuVZWSXQXOY6yiRa0XvwjboLJMWUZJcN9RY8j/go+I/jdhY4j+NrtIvI9xo0j8qrtK+ydBo0j7Ho1EvN+w51WYi5TN6GOMLEmh3kZJdgKBIoj1LoMFGcdosQRZ0UiCLIaIeIIshahRFiT8XFEWIWYhq/M4DiG339wY9dn2FGWLO4y5Ig7ZnJQxr2GrNiAOCjjMf3XrXcclPGMzqvXNQ7KeF7PNewXB2XspdtK9jitkEUjrY8wzScHZbTTem3bxkEZrTVd4YZxUEYf7dY50Ms+xHQS5JWf8d94Q1jEAYk4IBEHJOKARByQiAMScUAiDkjEAYk4IBEHJOKARByQiAMScUAiDkjEAenr6Avo7ck38KzeZWRyQHKP4/3j+PCfTs/usXJSufHLp729HlpeS1COk+P943hehqrk4nMMp4hjHKjkGMf6GbGeCuuPGD5ZHONAJdM4tocHY2NhGgdq+MZRPww8x0ZxjmNteZoYHlkV6zhqRoLt2CjmcawxNs4RByT3OLafGs7PlEIc2EAccjyYj41CHNhAHKVcGxKMjUIci5rvyhoiDkjEUfUmmCfigOQeB2+fb3CPAxuI4xNOsOes46h5ajg/WazjuLCMDYbHiW8c9SPBdnj4xoGbTOPY/uGDmp96cmAaB2o4xlHzM0sMj+IZByo5xvH2etj+F8b64xd/xYTvL29ZNvvmw8KwiRPHyXGOt883uMeBDYH+R2pEw+SARByQiAMScUAiDkjEAYk4IBEHJOKARByQiAMScUAiDkjEAYk4IBEHJOKARByQiAMScUAiDkjEAYk4IBEHJOKARByQiAMScUD6CzcdTMZKJveYAAAAAElFTkSuQmCC">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#0f4d2e">
+<title>Leitura - Imóveis Vagos</title>
 <style>
-  :root{
-    --bg: #EEF1F3;
-    --surface: #FFFFFF;
-    --line: #D7DEE3;
-    --text: #1B2733;
-    --text-soft: #5B6B78;
-    --copper: #A6541D;
-    --copper-dark: #7E3F14;
-    --verde-escuro: #1E5631;
-    --verde-escuro-dark: #143C21;
-    --teal: #2D6E7E;
-    --teal-dark: #1F4E5A;
-    --green: #3F7D53;
-    --red: #B23A3A;
-    --radius: 10px;
-  }
-  *{box-sizing:border-box;}
-  body{
-    margin:0;
-    background:var(--bg);
-    color:var(--text);
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    -webkit-tap-highlight-color:transparent;
-  }
-  .mono{ font-family:"SF Mono",SFMono-Regular,Menlo,Consolas,monospace; }
-
-  header{
-    position:sticky; top:0; z-index:10;
-    background:var(--teal-dark);
-    color:#fff;
-    padding:16px 18px 14px;
-    display:flex; justify-content:space-between; align-items:baseline;
-  }
-  header h1{ font-size:18px; margin:0; font-weight:600; letter-spacing:.2px; }
-  header .data-hoje{ font-size:13px; opacity:.85; }
-
-  main{ padding:14px 14px 100px; max-width:520px; margin:0 auto; }
-
-  .card{
-    background:var(--surface);
-    border:1px solid var(--line);
-    border-radius:var(--radius);
-    padding:16px;
-    margin-bottom:14px;
-  }
-  label{
-    display:block;
-    font-size:13px;
-    color:var(--text-soft);
-    margin-bottom:6px;
-    font-weight:600;
-  }
-  input[type=text], input[type=number]{
-    width:100%;
-    padding:12px 12px;
-    border:1px solid var(--line);
-    border-radius:8px;
-    font-size:16px;
-    background:#FBFBFA;
-    color:var(--text);
-  }
-  input:focus{ outline:2px solid var(--teal); outline-offset:1px; }
-
-  .field{ margin-bottom:16px; }
-  .field:last-child{ margin-bottom:0; }
-
-  .endereco-row{
-    display:grid;
-    grid-template-columns:2fr 1fr;
-    gap:10px;
-  }
-
-  .etapa-grid{
-    display:grid;
-    grid-template-columns:repeat(6, 1fr);
-    gap:6px;
-  }
-  .etapa-btn{
-    padding:10px 0;
-    border-radius:8px;
-    border:1px solid var(--line);
-    background:#FBFBFA;
-    color:var(--text);
-    font-size:14px;
-    font-weight:600;
-    font-family:inherit;
-  }
-  .etapa-btn.selected{
-    background:var(--teal);
-    border-color:var(--teal);
-    color:#fff;
-  }
-
-  .toggle-row{
-    display:flex; align-items:center; justify-content:space-between;
-    padding:12px 14px;
-    background:#FBFBFA;
-    border:1px solid var(--line);
-    border-radius:8px;
-  }
-  .toggle-row span{ font-size:15px; font-weight:500; }
-  .switch{
-    width:46px; height:28px; border-radius:999px;
-    background:#C7CFD4; position:relative; flex:none;
-    border:none; padding:0;
-  }
-  .switch::after{
-    content:''; position:absolute; top:3px; left:3px;
-    width:22px; height:22px; border-radius:50%;
-    background:#fff; transition:left .15s ease;
-  }
-  .switch.on{ background:var(--green); }
-  .switch.on::after{ left:21px; }
-
-  .leitura-wrap.disabled{ opacity:.4; pointer-events:none; }
-
-  .photo-actions{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:8px;
-  }
-  .photo-btn{
-    width:100%;
-    padding:12px;
-    border-radius:8px;
-    border:1px dashed var(--verde-escuro);
-    background:#EAF3ED;
-    color:var(--verde-escuro-dark);
-    font-size:14px;
-    font-weight:600;
-    font-family:inherit;
-  }
-  .photo-preview{
-    margin-top:10px;
-    position:relative;
-    display:inline-block;
-  }
-  .photo-preview img{
-    max-width:100%;
-    max-height:220px;
-    border-radius:8px;
-    display:block;
-    border:1px solid var(--line);
-  }
-  .photo-remove{
-    position:absolute; top:6px; right:6px;
-    background:rgba(27,39,51,.75);
-    color:#fff; border:none;
-    width:26px; height:26px; border-radius:50%;
-    font-size:14px; line-height:1;
-    font-family:inherit;
-  }
-
-  .save-btn{
-    width:100%;
-    padding:15px;
-    border:none;
-    border-radius:8px;
-    background:var(--verde-escuro);
-    color:#fff;
-    font-size:16px;
-    font-weight:700;
-    font-family:inherit;
-  }
-  .save-btn:active{ background:var(--verde-escuro-dark); }
-  .save-btn:disabled{ background:#C7CFD4; color:#8A959D; }
-
-  .msg{
-    text-align:center; font-size:13px; color:var(--green);
-    margin-top:8px; min-height:16px;
-  }
-
-  .section-title{
-    font-size:13px; font-weight:700; text-transform:none;
-    color:var(--text-soft); margin:22px 2px 10px;
-    display:flex; justify-content:space-between;
-  }
-
-  .registro{
-    background:var(--surface);
-    border:1px solid var(--line);
-    border-radius:var(--radius);
-    padding:12px 14px;
-    margin-bottom:10px;
-    display:flex; gap:12px; align-items:flex-start;
-  }
-  .registro-thumb{
-    width:52px; height:52px; border-radius:6px;
-    object-fit:cover; flex:none;
-    border:1px solid var(--line);
-  }
-  .registro-thumb-placeholder{
-    width:52px; height:52px; border-radius:6px;
-    flex:none; background:#EEF1F3;
-    border:1px solid var(--line);
-  }
-  .registro-body{ flex:1; min-width:0; }
-  .registro-endereco{ font-size:15px; font-weight:600; word-break:break-word; }
-  .registro-meta{ font-size:13px; color:var(--text-soft); margin-top:3px; }
-  .badge{
-    display:inline-block;
-    font-size:12px; font-weight:700;
-    padding:2px 7px; border-radius:5px;
-    background:var(--teal); color:#fff;
-    margin-right:6px;
-  }
-  .badge.vago{ background:var(--red); }
-  .registro-acoes{
-    display:flex; flex-direction:column; align-items:center;
-    gap:6px; flex:none;
-  }
-  .share-btn{
-    background:none; border:none; color:var(--verde-escuro);
-    font-size:17px; padding:2px 4px;
-    font-family:inherit;
-  }
-  .del-btn{
-    background:none; border:none; color:var(--text-soft);
-    font-size:18px; padding:2px 4px; flex:none;
-    font-family:inherit;
-  }
-
-  .empty{
-    text-align:center; color:var(--text-soft);
-    font-size:14px; padding:24px 10px;
-  }
-
-  .rodape{
-    text-align:center;
-    font-size:12px;
-    color:var(--text-soft);
-    padding:24px 10px 10px;
-  }
-
-  .backup-card{ padding:14px; }
-  .backup-aviso{
-    font-size:13px;
-    color:var(--text-soft);
-    margin:0 0 12px;
-  }
-  .backup-actions{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:8px;
-  }
-  .backup-btn{
-    padding:12px;
-    border-radius:8px;
-    border:1px solid var(--teal);
-    background:#fff;
-    color:var(--teal-dark);
-    font-size:14px;
-    font-weight:700;
-    font-family:inherit;
-  }
-
-  input[type=file]{ display:none; }
-
-  .crop-modal{
-    display:none;
-    position:fixed; inset:0; z-index:100;
-    background:#0F141A;
-    flex-direction:column;
-  }
-  .crop-stage{
-    position:relative;
-    flex:1;
-    min-height:0;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    overflow:hidden;
-    touch-action:none;
-    background:#0F141A;
-  }
-  .crop-stage img{
-    max-width:100%;
-    max-height:100%;
-    display:block;
-    -webkit-user-drag:none;
-    user-select:none;
-    pointer-events:none;
-  }
-  .crop-box{
-    position:absolute;
-    border:2px solid #fff;
-    box-shadow:0 0 0 2000px rgba(0,0,0,.55);
-    touch-action:none;
-  }
-  .crop-handle{
-    position:absolute;
-    right:-14px; bottom:-14px;
-    width:28px; height:28px;
-    background:#fff;
-    border-radius:50%;
-    border:2px solid var(--verde-escuro);
-    touch-action:none;
-  }
-  .crop-hint{
-    text-align:center;
-    color:#B8C2CC;
-    font-size:13px;
-    padding:8px 14px 0;
-    flex:none;
-  }
-  .crop-actions{
-    flex:none;
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
-    padding:14px;
-    background:#0F141A;
-  }
-  .crop-actions button{
-    padding:13px;
-    border:none;
-    border-radius:8px;
-    font-size:15px;
-    font-weight:700;
-    font-family:inherit;
-  }
-  #cropCancelBtn{ background:#3A4552; color:#fff; }
-  #cropConfirmBtn{ background:var(--verde-escuro); color:#fff; }
-
-  .photo-modal{
-    display:none;
-    position:fixed; inset:0; z-index:100;
-    background:#0F141A;
-    flex-direction:column;
-  }
-  .photo-modal-top{
-    flex:none;
-    display:flex; align-items:center; justify-content:space-between;
-    padding:14px 16px;
-    color:#fff;
-    font-size:14px;
-  }
-  .photo-modal-top button{
-    background:none; border:none; color:#fff;
-    font-size:20px; padding:2px 8px;
-    font-family:inherit;
-  }
-  .photo-modal-body{
-    flex:1; min-height:0;
-    display:flex; align-items:center; justify-content:center;
-    padding:0 10px;
-  }
-  .photo-modal-body img{
-    max-width:100%; max-height:100%;
-    border-radius:6px;
-  }
-  .photo-modal-hint{
-    flex:none;
-    text-align:center;
-    color:#B8C2CC;
-    font-size:13px;
-    padding:10px 16px 18px;
-  }
+html,body{margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f1f5f2;color:#17221b}
+*{box-sizing:border-box}
+header{background:#0f4d2e;color:#fff;text-align:center;padding:16px;font-weight:bold}
+main{max-width:700px;margin:auto;padding:12px}
+.card{background:#fff;border-radius:14px;padding:15px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+h2{font-size:18px;margin:0 0 8px}
+.help{font-size:13px;color:#66736a;margin-bottom:10px}
+label{display:block;font-weight:bold;margin:10px 0 5px}
+input[type=text],input[type=date],input[type=file]{width:100%;min-height:46px;border:1px solid #bcc8bf;border-radius:9px;padding:10px;font-size:16px;background:#fff}
+.stage-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;width:100%;margin:12px 0}
+.switch-row{display:flex;justify-content:space-between;align-items:center;margin:14px 0}
+.switch-label{font-weight:bold}
+.switch{width:54px;height:32px;accent-color:#198754;cursor:pointer}
+.switch:after{content:"";position:absolute;width:28px;height:28px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s}
+.switch.on{background:#198754}.switch.on:after{left:27px}
+.btn{width:100%;height:46px;border:0;border-radius:9px;margin-top:9px;font-size:16px;font-weight:bold}
+.green{background:#0f4d2e;color:#fff}.gray{background:#e3e9e5}.red{background:#b42318;color:#fff}
+.disabled{opacity:.4}
+.preview{display:none;margin-top:9px}
+.preview img{width:100%;max-height:300px;object-fit:contain;border-radius:9px;background:#eee}
+.record{border-top:1px solid #e2e7e3;padding:12px 0}
+.record:first-child{border-top:0}
+.tag{display:inline-block;background:#e7f2ea;color:#0f4d2e;padding:4px 7px;border-radius:12px;font-size:12px;font-weight:bold;margin:3px}
+@media(max-width:430px){.stage-grid{gap:6px}.stage-btn{height:43px;font-size:15px}}
+ .stage-radio{position:absolute;opacity:0;width:1px;height:1px}
+.stage-choice{display:flex;align-items:center;justify-content:center;height:45px;margin:0!important;padding:0;border:2px solid #0f4d2e;border-radius:9px;background:#fff;color:#0f4d2e;font-size:16px;font-weight:bold;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:rgba(15,77,46,.2)}
+.stage-radio:checked + .stage-choice{background:#0f4d2e;color:#fff;border-color:#08351e;box-shadow:0 0 0 3px #b7d8c2}
+.stage-choice:active{transform:scale(.96)}
+ .vacant-label{margin:0!important;font-weight:bold;font-size:16px;cursor:pointer;touch-action:manipulation;padding:8px 0}
+.vacant-checkbox{width:58px!important;height:34px!important;margin:0!important;appearance:none;-webkit-appearance:none;background:#aeb9b1;border:0!important;border-radius:20px;padding:0!important;position:relative;cursor:pointer;touch-action:manipulation}
+.vacant-checkbox:before{content:"";position:absolute;width:28px;height:28px;left:3px;top:3px;border-radius:50%;background:#fff;transition:left .18s}
+.vacant-checkbox:checked{background:#198754}
+.vacant-checkbox:checked:before{left:27px}
+.vacant-checkbox:focus{outline:none;box-shadow:0 0 0 3px #b7d8c2}
 </style>
 </head>
 <body>
-
-<header>
-  <h1>Imóveis Vagos</h1>
-</header>
-
+<header>Leitura - Imóveis Vagos</header>
 <main>
 
-  <div class="card">
-    <div class="field">
-      <label for="dataCampo">Data</label>
-      <input type="date" id="dataCampo">
-    </div>
+<section class="card">
+<h2>Etapa da leitura</h2>
+<div class="help">Selecione uma etapa:</div>
 
-    <div class="field">
-      <div class="endereco-row">
-        <div>
-          <label for="endereco">Endereço</label>
-          <input type="text" id="endereco" placeholder="Rua, bairro">
-        </div>
-        <div>
-          <label for="numero">Número</label>
-          <input type="text" inputmode="numeric" id="numero" placeholder="Nº">
-        </div>
-      </div>
-    </div>
+<div id="stageGrid" class="stage-grid">
+<input class="stage-radio" type="radio" name="etapa" id="etapa1" value="1">
+<label class="stage-choice" for="etapa1">1</label>
+<input class="stage-radio" type="radio" name="etapa" id="etapa2" value="2">
+<label class="stage-choice" for="etapa2">2</label>
+<input class="stage-radio" type="radio" name="etapa" id="etapa3" value="3">
+<label class="stage-choice" for="etapa3">3</label>
+<input class="stage-radio" type="radio" name="etapa" id="etapa4" value="4">
+<label class="stage-choice" for="etapa4">4</label>
+<input class="stage-radio" type="radio" name="etapa" id="etapa5" value="5">
+<label class="stage-choice" for="etapa5">5</label>
+<input class="stage-radio" type="radio" name="etapa" id="etapa6" value="6">
+<label class="stage-choice" for="etapa6">6</label>
+<input class="stage-radio" type="radio" name="etapa" id="etapa7" value="7">
+<label class="stage-choice" for="etapa7">7</label>
+<input class="stage-radio" type="radio" name="etapa" id="etapa8" value="8">
+<label class="stage-choice" for="etapa8">8</label>
+<input class="stage-radio" type="radio" name="etapa" id="etapa9" value="9">
+<label class="stage-choice" for="etapa9">9</label>
+<input class="stage-radio" type="radio" name="etapa" id="etapa10" value="10">
+<label class="stage-choice" for="etapa10">10</label>
+<input class="stage-radio" type="radio" name="etapa" id="etapa11" value="11">
+<label class="stage-choice" for="etapa11">11</label>
+<input class="stage-radio" type="radio" name="etapa" id="etapa12" value="12">
+<label class="stage-choice" for="etapa12">12</label>
+<input class="stage-radio" type="radio" name="etapa" id="etapa13" value="13">
+<label class="stage-choice" for="etapa13">13</label>
+<input class="stage-radio" type="radio" name="etapa" id="etapa14" value="14">
+<label class="stage-choice" for="etapa14">14</label>
+<input class="stage-radio" type="radio" name="etapa" id="etapa15" value="15">
+<label class="stage-choice" for="etapa15">15</label>
+<input class="stage-radio" type="radio" name="etapa" id="etapa16" value="16">
+<label class="stage-choice" for="etapa16">16</label>
+<input class="stage-radio" type="radio" name="etapa" id="etapa17" value="17">
+<label class="stage-choice" for="etapa17">17</label>
+<input class="stage-radio" type="radio" name="etapa" id="etapa18" value="18">
+<label class="stage-choice" for="etapa18">18</label>
+</div>
 
-    <div class="field">
-      <label for="medidor">Número do medidor</label>
-      <input type="text" id="medidor" placeholder="Ex: 4A521B9">
-    </div>
+<label for="endereco">Endereço</label>
+<input id="endereco" type="text" placeholder="Digite o endereço">
 
-    <div class="field leitura-wrap" id="leituraWrap">
-      <label for="leitura">Leitura</label>
-      <input type="number" inputmode="numeric" id="leitura" placeholder="Ex: 04521">
-    </div>
+<label for="numero">Número</label>
+<input id="numero" type="text" inputmode="numeric" placeholder="Número do imóvel">
 
-    <div class="field">
-      <label>Etapa</label>
-      <div class="etapa-grid" id="etapaGrid"></div>
-    </div>
+<label for="medidor">Número do medidor</label>
+<input id="medidor" type="text" placeholder="Digite o número do medidor">
 
-    <div class="field">
-      <div class="toggle-row">
-        <span>Imóvel desocupado</span>
-        <button type="button" class="switch" id="desocupadoSwitch" aria-pressed="false"></button>
-      </div>
-    </div>
+<label for="leitura">Leitura</label>
+<input id="leitura" type="text" inputmode="decimal" placeholder="Digite a leitura">
 
-    <div class="field">
-      <label>Foto</label>
-      <div class="photo-actions">
-        <button type="button" class="photo-btn" id="photoCameraBtn">📷 Tirar foto</button>
-        <button type="button" class="photo-btn" id="photoGalleryBtn">🖼️ Escolher da galeria</button>
-      </div>
-      <input type="file" id="photoInputCamera" accept="image/*" capture="environment">
-      <input type="file" id="photoInputGallery" accept="image/*">
-      <div class="photo-preview" id="photoPreview" style="display:none;">
-        <img id="photoImg" src="">
-        <button type="button" class="photo-remove" id="photoRemove">✕</button>
-      </div>
-    </div>
+<label for="data">Data</label>
+<input id="data" type="date">
 
-    <div class="field">
-      <button type="button" class="save-btn" id="saveBtn">Salvar registro</button>
-      <div class="msg" id="msg"></div>
-    </div>
-  </div>
+<div class="switch-row">
+  <label class="vacant-label" for="vacant">Imóvel desocupado</label>
+  <input id="vacant" class="vacant-checkbox" type="checkbox">
+</div>
 
-  <div class="section-title">
-    <span>Registros de hoje</span>
-    <span id="contHoje" class="mono">0</span>
-  </div>
-  <div id="lista"></div>
+<label>Foto do medidor</label>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+<label for="cameraInput" class="btn green" style="margin-top:0;display:flex;align-items:center;justify-content:center;cursor:pointer">📷 Câmera</label>
+<label for="galleryInput" class="btn gray" style="margin-top:0;display:flex;align-items:center;justify-content:center;cursor:pointer">🖼️ Galeria</label>
+</div>
+<input id="cameraInput" type="file" accept="image/*" capture="environment" style="position:absolute;width:1px;height:1px;opacity:0">
+<input id="galleryInput" type="file" accept="image/*" style="position:absolute;width:1px;height:1px;opacity:0">
 
-  <div class="section-title">
-    <span>Backup dos dados</span>
-  </div>
-  <div class="card backup-card">
-    <p class="backup-aviso">Faça isso de vez em quando para não perder os registros se o app "esquecer" os dados.</p>
-    <div class="backup-actions">
-      <button type="button" class="backup-btn" id="exportarBtn">Exportar backup</button>
-      <button type="button" class="backup-btn" id="importarBtn">Importar backup</button>
-    </div>
-    <input type="file" id="importarInput" accept="application/json">
-  </div>
+<div id="preview" class="preview"><img id="photoImg" alt="Foto do medidor"></div>
+<div id="photoTools" style="display:none;gap:8px">
+<button id="cropBtn" type="button" class="btn gray" style="margin-top:8px">✂️ Recortar</button>
+<button id="shareBtn" type="button" class="btn green" style="margin-top:8px">📤 Compartilhar</button>
+</div>
 
-  <div class="rodape">Planilha criada por Luís Ricardo</div>
+<div id="cropPanel" style="display:none;margin-top:10px">
+<div style="font-weight:bold;margin-bottom:6px">Arraste na foto para escolher o recorte</div>
+<canvas id="cropCanvas" style="width:100%;border:2px solid #0f4d2e;border-radius:8px;touch-action:none;background:#222"></canvas>
+<div style="display:flex;gap:8px">
+<button id="applyCrop" type="button" class="btn green">Aplicar</button>
+<button id="cancelCrop" type="button" class="btn gray">Cancelar</button>
+</div>
+</div>
+
+<button id="save" type="button" class="btn green">Salvar registro</button>
+<button id="clear" type="button" class="btn gray">Limpar</button>
+</section>
+
+<section class="card">
+<h2>Registros salvos</h2>
+<div id="records"></div>
+</section>
+
+<section class="card">
+<h2>Backup</h2>
+<button id="export" type="button" class="btn gray">Exportar backup</button>
+<input id="import" type="file" accept=".json,application/json" style="margin-top:10px">
+</section>
 
 </main>
-
-<div class="crop-modal" id="cropModal">
-  <div class="crop-stage" id="cropStage">
-    <img id="cropImage" src="" alt="">
-    <div class="crop-box" id="cropBox">
-      <div class="crop-handle" id="cropHandle"></div>
-    </div>
-  </div>
-  <div class="crop-hint">Arraste para mover, use o círculo para redimensionar</div>
-  <div class="crop-actions">
-    <button type="button" id="cropCancelBtn">Cancelar</button>
-    <button type="button" id="cropConfirmBtn">Recortar</button>
-  </div>
-</div>
-
-<div class="photo-modal" id="photoModal">
-  <div class="photo-modal-top">
-    <span id="photoModalInfo"></span>
-    <button type="button" id="photoModalClose">✕</button>
-  </div>
-  <div class="photo-modal-body">
-    <img id="photoModalImg" src="" alt="Foto do registro">
-  </div>
-  <div class="photo-modal-hint">Toque e segure a foto para salvar ou compartilhar</div>
-</div>
+<footer style="text-align:center;padding:8px 12px 22px;color:#66736a;font-size:12px">
+Criado por Luís Ricardo
+</footer>
 
 <script>
-const STORAGE_KEY = 'registros-leitura';
+(function(){
+"use strict";
 
-let state = {
-  etapa: null,
-  desocupado: false,
-  foto: null,
-  registros: []
-};
+var ETAPAS="app_etapas_v4";
+var REGISTROS="app_registros_v4";
+var etapaAtual=0;
+var dadosEtapas={};
+var registros=[];
+var fotoAtual=null;
+var desocupado=false;
 
-function hojeStr(){
-  const d = new Date();
-  const dd = String(d.getDate()).padStart(2,'0');
-  const mm = String(d.getMonth()+1).padStart(2,'0');
-  const yyyy = d.getFullYear();
-  return `${dd}/${mm}/${yyyy}`;
+var data=document.getElementById("data");
+var endereco=document.getElementById("endereco");
+var numero=document.getElementById("numero");
+var medidor=document.getElementById("medidor");
+var leitura=document.getElementById("leitura");
+var vacant=document.getElementById("vacant");
+var preview=document.getElementById("preview");
+var photoImg=document.getElementById("photoImg");
+var records=document.getElementById("records");
+
+var cameraInput=document.getElementById("cameraInput");
+var galleryInput=document.getElementById("galleryInput");
+var photoTools=document.getElementById("photoTools");
+var cropBtn=document.getElementById("cropBtn");
+var shareBtn=document.getElementById("shareBtn");
+var cropPanel=document.getElementById("cropPanel");
+var cropCanvas=document.getElementById("cropCanvas");
+var applyCrop=document.getElementById("applyCrop");
+var cancelCrop=document.getElementById("cancelCrop");
+
+function hoje(){
+ var d=new Date();
+ function z(n){return n<10?"0"+n:n;}
+ return d.getFullYear()+"-"+z(d.getMonth()+1)+"-"+z(d.getDate());
 }
-function horaStr(){
-  const d = new Date();
-  return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
+
+function guardarEtapas(){
+ try{localStorage.setItem(ETAPAS,JSON.stringify(dadosEtapas));}catch(e){}
 }
 
-function isoHoje(){
-  const d = new Date();
-  const yyyy = d.getFullYear();
-  const mm = String(d.getMonth()+1).padStart(2,'0');
-  const dd = String(d.getDate()).padStart(2,'0');
-  return `${yyyy}-${mm}-${dd}`;
-}
-function isoParaBr(iso){
-  const [yyyy,mm,dd] = iso.split('-');
-  return `${dd}/${mm}/${yyyy}`;
+function guardarEtapaAtual(){
+ if(!etapaAtual)return;
+ dadosEtapas[String(etapaAtual)]={
+  endereco:endereco.value,
+  numero:numero.value,
+  medidor:medidor.value,
+  leitura:leitura.value,
+  data:data.value,
+  desocupado:desocupado,
+  foto:fotoAtual
+ };
+ guardarEtapas();
 }
 
-document.getElementById('dataCampo').value = isoHoje();
+function aplicarEstado(){
+ vacant.checked=desocupado;
+ leitura.disabled=desocupado;
+ leitura.style.opacity=desocupado?".45":"1";
+ if(fotoAtual){
+  photoImg.src=fotoAtual;
+  preview.style.display="block";
+  photoTools.style.display="grid";
+ }else{
+  photoImg.removeAttribute("src");
+  preview.style.display="none";
+  photoTools.style.display="none";
+ }
+}
 
-// capitaliza a primeira letra do endereço
-const enderecoInput = document.getElementById('endereco');
-enderecoInput.addEventListener('input', () => {
-  if(enderecoInput.value.length === 0) return;
-  const start = enderecoInput.selectionStart;
-  const end = enderecoInput.selectionEnd;
-  enderecoInput.value = enderecoInput.value.charAt(0).toUpperCase() + enderecoInput.value.slice(1);
-  enderecoInput.setSelectionRange(start, end);
+function carregarEtapa(n){
+ etapaAtual=n;
+ var d=dadosEtapas[String(n)]||{};
+ endereco.value=d.endereco||"";
+ numero.value=d.numero||"";
+ medidor.value=d.medidor||"";
+ leitura.value=d.leitura||"";
+ data.value=d.data||hoje();
+ desocupado=d.desocupado===true;
+ fotoAtual=d.foto||null;
+ aplicarEstado();
+}
+
+document.querySelectorAll(".stage-radio").forEach(function(radio){
+ radio.addEventListener("change",function(){
+  if(!radio.checked)return;
+  guardarEtapaAtual();
+  carregarEtapa(Number(radio.value));
+ });
 });
 
-// build etapa buttons 1-18
-const etapaGrid = document.getElementById('etapaGrid');
-for(let i=1;i<=18;i++){
-  const b = document.createElement('button');
-  b.type = 'button';
-  b.className = 'etapa-btn';
-  b.textContent = i;
-  b.dataset.etapa = i;
-  b.addEventListener('click', () => {
-    state.etapa = (state.etapa === i) ? null : i;
-    document.querySelectorAll('.etapa-btn').forEach(el=>{
-      el.classList.toggle('selected', Number(el.dataset.etapa) === state.etapa);
-    });
-    // evita que uma foto já anexada fique valendo para outra etapa
-    if(state.foto){
-      state.foto = null;
-      photoImg.src = '';
-      photoPreview.style.display = 'none';
-    }
-  });
-  etapaGrid.appendChild(b);
-}
-
-// desocupado switch
-const desocupadoSwitch = document.getElementById('desocupadoSwitch');
-const leituraWrap = document.getElementById('leituraWrap');
-desocupadoSwitch.addEventListener('click', () => {
-  state.desocupado = !state.desocupado;
-  desocupadoSwitch.classList.toggle('on', state.desocupado);
-  desocupadoSwitch.setAttribute('aria-pressed', state.desocupado);
-  leituraWrap.classList.toggle('disabled', state.desocupado);
+vacant.addEventListener("change",function(){
+ desocupado=vacant.checked;
+ leitura.disabled=desocupado;
+ leitura.style.opacity=desocupado?".45":"1";
+ guardarEtapaAtual();
 });
 
-// photo
-const photoCameraBtn = document.getElementById('photoCameraBtn');
-const photoGalleryBtn = document.getElementById('photoGalleryBtn');
-const photoInputCamera = document.getElementById('photoInputCamera');
-const photoInputGallery = document.getElementById('photoInputGallery');
-const photoPreview = document.getElementById('photoPreview');
-const photoImg = document.getElementById('photoImg');
-const photoRemove = document.getElementById('photoRemove');
+[endereco,numero,medidor,leitura].forEach(function(el){
+ el.addEventListener("input",guardarEtapaAtual);
+});
+data.addEventListener("change",guardarEtapaAtual);
 
-photoCameraBtn.addEventListener('click', () => photoInputCamera.click());
-photoGalleryBtn.addEventListener('click', () => photoInputGallery.click());
-
-function definirFoto(dataUrl){
-  state.foto = dataUrl;
-  photoImg.src = dataUrl;
-  photoPreview.style.display = 'inline-block';
+function mostrarFoto(dataUrl){
+ if(!etapaAtual){
+  alert("Selecione primeiro uma etapa de 1 a 18.");
+  return;
+ }
+ fotoAtual=dataUrl;
+ photoImg.src=dataUrl;
+ preview.style.display="block";
+ photoTools.style.display="grid";
+ guardarEtapaAtual();
 }
 
-function processarFoto(file){
-  if(!file) return;
-  const reader = new FileReader();
-  reader.onload = (ev) => {
-    const img = new Image();
-    img.onload = () => {
-      const maxW = 900;
-      const scale = Math.min(1, maxW / img.width);
-      const canvas = document.createElement('canvas');
-      canvas.width = img.width * scale;
-      canvas.height = img.height * scale;
-      const ctx = canvas.getContext('2d');
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-      definirFoto(canvas.toDataURL('image/jpeg', 0.65));
-    };
-    img.src = ev.target.result;
-  };
-  reader.readAsDataURL(file);
+function lerFoto(input){
+ if(!etapaAtual){
+  alert("Selecione primeiro uma etapa de 1 a 18.");
+  input.value="";
+  return;
+ }
+ var f=input.files && input.files[0];
+ if(!f)return;
+ if(!f.type || f.type.indexOf("image/")!==0){
+  alert("Selecione uma imagem.");
+  input.value="";
+  return;
+ }
+ var reader=new FileReader();
+ reader.onload=function(){
+  mostrarFoto(reader.result);
+  input.value="";
+ };
+ reader.onerror=function(){
+  alert("Não foi possível abrir a foto.");
+  input.value="";
+ };
+ reader.readAsDataURL(f);
 }
 
-photoInputCamera.addEventListener('change', (e) => {
-  processarFoto(e.target.files[0]);
-  photoInputCamera.value = '';
+/* CÂMERA E GALERIA: os botões acionam diretamente o input nativo do iPhone */
+
+cameraInput.addEventListener("change",function(){
+ if(!etapaAtual){
+  alert("Selecione primeiro uma etapa de 1 a 18.");
+  cameraInput.value="";
+  return;
+ }
+ lerFoto(cameraInput);
 });
 
-// galeria: abre o recorte antes de usar a foto
-const cropModal = document.getElementById('cropModal');
-const cropStage = document.getElementById('cropStage');
-const cropImage = document.getElementById('cropImage');
-const cropBox = document.getElementById('cropBox');
-const cropHandle = document.getElementById('cropHandle');
-const cropCancelBtn = document.getElementById('cropCancelBtn');
-const cropConfirmBtn = document.getElementById('cropConfirmBtn');
-
-let dragMode = null;
-let dragStartX = 0, dragStartY = 0;
-let boxStartLeft = 0, boxStartTop = 0, boxStartW = 0, boxStartH = 0;
-
-function iniciarCropBox(){
-  const stageRect = cropStage.getBoundingClientRect();
-  const imgRect = cropImage.getBoundingClientRect();
-  const imgLeft = imgRect.left - stageRect.left;
-  const imgTop = imgRect.top - stageRect.top;
-  const w = imgRect.width * 0.8;
-  const h = imgRect.height * 0.8;
-  cropBox.style.width = w + 'px';
-  cropBox.style.height = h + 'px';
-  cropBox.style.left = (imgLeft + (imgRect.width - w) / 2) + 'px';
-  cropBox.style.top = (imgTop + (imgRect.height - h) / 2) + 'px';
-}
-
-photoInputGallery.addEventListener('change', (e) => {
-  const file = e.target.files[0];
-  photoInputGallery.value = '';
-  if(!file) return;
-  const reader = new FileReader();
-  reader.onload = (ev) => {
-    cropImage.onload = () => { iniciarCropBox(); };
-    cropImage.onerror = () => {
-      cropModal.style.display = 'none';
-      showMsg('Não foi possível abrir essa foto para recortar. Tente outra foto.', true);
-    };
-    cropImage.src = ev.target.result;
-    cropModal.style.display = 'flex';
-  };
-  reader.onerror = () => {
-    showMsg('Não foi possível ler essa foto.', true);
-  };
-  reader.readAsDataURL(file);
+galleryInput.addEventListener("change",function(){
+ if(!etapaAtual){
+  alert("Selecione primeiro uma etapa de 1 a 18.");
+  galleryInput.value="";
+  return;
+ }
+ lerFoto(galleryInput);
 });
 
-function pontoDoEvento(e){
-  if(e.touches && e.touches.length){
-    return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+/* RECORTE */
+var cropImg=null,cx=0,cy=0,cw=0,ch=0,arrastando=false;
+
+cropBtn.addEventListener("click",function(){
+ if(!fotoAtual){
+  alert("Primeiro tire ou escolha uma foto.");
+  return;
+ }
+ cropImg=new Image();
+ cropImg.onload=function(){
+  var max=1200;
+  var scale=Math.min(1,max/cropImg.width,max/cropImg.height);
+  cropCanvas.width=Math.max(1,Math.round(cropImg.width*scale));
+  cropCanvas.height=Math.max(1,Math.round(cropImg.height*scale));
+  var ctx=cropCanvas.getContext("2d");
+  ctx.clearRect(0,0,cropCanvas.width,cropCanvas.height);
+  ctx.drawImage(cropImg,0,0,cropCanvas.width,cropCanvas.height);
+  cx=cy=cw=ch=0;
+  cropPanel.style.display="block";
+ };
+ cropImg.onerror=function(){alert("Não foi possível preparar a foto para recorte.");};
+ cropImg.src=fotoAtual;
+});
+
+function ponto(e){
+ var r=cropCanvas.getBoundingClientRect();
+ var t=e.touches ? e.touches[0] : e;
+ var sx=cropCanvas.width/r.width;
+ var sy=cropCanvas.height/r.height;
+ return {
+  x:Math.max(0,Math.min(cropCanvas.width,(t.clientX-r.left)*sx)),
+  y:Math.max(0,Math.min(cropCanvas.height,(t.clientY-r.top)*sy))
+ };
+}
+
+function desenharRecorte(){
+ if(!cropImg)return;
+ var ctx=cropCanvas.getContext("2d");
+ ctx.clearRect(0,0,cropCanvas.width,cropCanvas.height);
+ ctx.drawImage(cropImg,0,0,cropCanvas.width,cropCanvas.height);
+ var x=cw<0?cx+cw:cx;
+ var y=ch<0?cy+ch:cy;
+ var w=Math.abs(cw);
+ var h=Math.abs(ch);
+ if(w>2&&h>2){
+  ctx.save();
+  ctx.fillStyle="rgba(0,0,0,.45)";
+  ctx.fillRect(0,0,cropCanvas.width,cropCanvas.height);
+  ctx.clearRect(x,y,w,h);
+  ctx.drawImage(cropImg,
+   x*(cropImg.width/cropCanvas.width),
+   y*(cropImg.height/cropCanvas.height),
+   w*(cropImg.width/cropCanvas.width),
+   h*(cropImg.height/cropCanvas.height),
+   x,y,w,h);
+  ctx.strokeStyle="#fff";
+  ctx.lineWidth=3;
+  ctx.strokeRect(x,y,w,h);
+  ctx.restore();
+ }
+}
+
+function inicio(e){
+ e.preventDefault();
+ var p=ponto(e);
+ cx=p.x;cy=p.y;cw=0;ch=0;arrastando=true;
+}
+
+function movimento(e){
+ if(!arrastando)return;
+ e.preventDefault();
+ var p=ponto(e);
+ cw=p.x-cx;ch=p.y-cy;
+ desenharRecorte();
+}
+
+function fim(){
+ arrastando=false;
+}
+
+cropCanvas.addEventListener("mousedown",inicio);
+cropCanvas.addEventListener("mousemove",movimento);
+window.addEventListener("mouseup",fim);
+cropCanvas.addEventListener("touchstart",inicio,{passive:false});
+cropCanvas.addEventListener("touchmove",movimento,{passive:false});
+cropCanvas.addEventListener("touchend",fim,{passive:false});
+
+applyCrop.addEventListener("click",function(){
+ if(!cropImg)return;
+ var x=cw<0?cx+cw:cx;
+ var y=ch<0?cy+ch:cy;
+ var w=Math.abs(cw);
+ var h=Math.abs(ch);
+ if(w<10||h<10){
+  alert("Arraste sobre a foto para selecionar o recorte.");
+  return;
+ }
+ var sx=cropImg.width/cropCanvas.width;
+ var sy=cropImg.height/cropCanvas.height;
+ var c=document.createElement("canvas");
+ c.width=Math.max(1,Math.round(w*sx));
+ c.height=Math.max(1,Math.round(h*sy));
+ c.getContext("2d").drawImage(cropImg,x*sx,y*sy,w*sx,h*sy,0,0,c.width,c.height);
+ mostrarFoto(c.toDataURL("image/jpeg",.92));
+ cropPanel.style.display="none";
+});
+
+cancelCrop.addEventListener("click",function(){
+ cropPanel.style.display="none";
+});
+
+/* COMPARTILHAR: cria uma cópia da foto com endereço e número escritos */
+shareBtn.addEventListener("click",function(){
+ if(!fotoAtual){
+  alert("Não há foto para compartilhar.");
+  return;
+ }
+ var img=new Image();
+ img.onload=function(){
+  var c=document.createElement("canvas");
+  var max=1600;
+  var s=Math.min(1,max/img.width,max/img.height);
+  c.width=Math.max(1,Math.round(img.width*s));
+  c.height=Math.max(1,Math.round(img.height*s));
+  var ctx=c.getContext("2d");
+  ctx.drawImage(img,0,0,c.width,c.height);
+
+  var texto=(endereco.value||"").trim();
+  if(numero.value.trim()) texto+=(texto?" - ":"")+"Nº "+numero.value.trim();
+  if(!texto) texto="Etapa "+etapaAtual;
+
+  var fs=Math.max(18,Math.round(c.width/30));
+  ctx.font="bold "+fs+"px Arial";
+  while(fs>12 && ctx.measureText(texto).width>c.width-40){
+   fs--;
+   ctx.font="bold "+fs+"px Arial";
   }
-  return { x: e.clientX, y: e.clientY };
-}
+  var h=fs+28;
+  ctx.fillStyle="rgba(0,0,0,.68)";
+  ctx.fillRect(0,c.height-h,c.width,h);
+  ctx.fillStyle="#fff";
+  ctx.fillText(texto,14,c.height-10);
 
-function cropInicio(e){
-  dragMode = (e.target === cropHandle) ? 'resize' : 'move';
-  const p = pontoDoEvento(e);
-  dragStartX = p.x;
-  dragStartY = p.y;
-  const stageRect = cropStage.getBoundingClientRect();
-  const boxRect = cropBox.getBoundingClientRect();
-  boxStartLeft = boxRect.left - stageRect.left;
-  boxStartTop = boxRect.top - stageRect.top;
-  boxStartW = boxRect.width;
-  boxStartH = boxRect.height;
-  e.preventDefault();
-}
-
-function cropMovimento(e){
-  if(!dragMode) return;
-  const p = pontoDoEvento(e);
-  const dx = p.x - dragStartX;
-  const dy = p.y - dragStartY;
-  const stageRect = cropStage.getBoundingClientRect();
-  const imgRect = cropImage.getBoundingClientRect();
-  const imgLeft = imgRect.left - stageRect.left;
-  const imgTop = imgRect.top - stageRect.top;
-  const imgRight = imgLeft + imgRect.width;
-  const imgBottom = imgTop + imgRect.height;
-
-  if(dragMode === 'move'){
-    let newLeft = boxStartLeft + dx;
-    let newTop = boxStartTop + dy;
-    newLeft = Math.max(imgLeft, Math.min(newLeft, imgRight - boxStartW));
-    newTop = Math.max(imgTop, Math.min(newTop, imgBottom - boxStartH));
-    cropBox.style.left = newLeft + 'px';
-    cropBox.style.top = newTop + 'px';
-  }else{
-    const minSize = 40;
-    let newW = Math.max(minSize, Math.min(boxStartW + dx, imgRight - boxStartLeft));
-    let newH = Math.max(minSize, Math.min(boxStartH + dy, imgBottom - boxStartTop));
-    cropBox.style.width = newW + 'px';
-    cropBox.style.height = newH + 'px';
-  }
-  e.preventDefault();
-}
-
-function cropFim(){
-  dragMode = null;
-}
-
-cropBox.addEventListener('mousedown', cropInicio);
-document.addEventListener('mousemove', cropMovimento);
-document.addEventListener('mouseup', cropFim);
-
-cropBox.addEventListener('touchstart', cropInicio, { passive:false });
-document.addEventListener('touchmove', cropMovimento, { passive:false });
-document.addEventListener('touchend', cropFim);
-document.addEventListener('touchcancel', cropFim);
-
-function fecharCropModal(){
-  cropModal.style.display = 'none';
-  cropImage.src = '';
-}
-
-cropCancelBtn.addEventListener('click', fecharCropModal);
-
-cropConfirmBtn.addEventListener('click', () => {
-  const imgRect = cropImage.getBoundingClientRect();
-  const boxRect = cropBox.getBoundingClientRect();
-
-  const scaleX = cropImage.naturalWidth / imgRect.width;
-  const scaleY = cropImage.naturalHeight / imgRect.height;
-
-  const sx = (boxRect.left - imgRect.left) * scaleX;
-  const sy = (boxRect.top - imgRect.top) * scaleY;
-  const sw = boxRect.width * scaleX;
-  const sh = boxRect.height * scaleY;
-
-  const maxOut = 1000;
-  const outScale = Math.min(1, maxOut / Math.max(sw, sh));
-
-  const canvas = document.createElement('canvas');
-  canvas.width = sw * outScale;
-  canvas.height = sh * outScale;
-  const ctx = canvas.getContext('2d');
-  ctx.drawImage(cropImage, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height);
-
-  definirFoto(canvas.toDataURL('image/jpeg', 0.7));
-  fecharCropModal();
-});
-
-photoRemove.addEventListener('click', () => {
-  state.foto = null;
-  photoPreview.style.display = 'none';
-});
-
-// save
-const saveBtn = document.getElementById('saveBtn');
-const msg = document.getElementById('msg');
-
-saveBtn.addEventListener('click', async () => {
-  const endereco = document.getElementById('endereco').value.trim();
-  const numero = document.getElementById('numero').value.trim();
-  const medidor = document.getElementById('medidor').value.trim();
-  const leituraVal = document.getElementById('leitura').value.trim();
-  const dataIso = document.getElementById('dataCampo').value;
-
-  if(!endereco){ showMsg('Informe o endereço.', true); return; }
-  if(!medidor){ showMsg('Informe o número do medidor.', true); return; }
-  if(!dataIso){ showMsg('Selecione a data.', true); return; }
-  if(!state.etapa){ showMsg('Selecione a etapa.', true); return; }
-  if(!state.desocupado && !leituraVal){ showMsg('Informe a leitura ou marque desocupado.', true); return; }
-
-  const registro = {
-    id: Date.now().toString(36),
-    endereco,
-    numero,
-    medidor,
-    etapa: state.etapa,
-    desocupado: state.desocupado,
-    leitura: state.desocupado ? null : leituraVal,
-    foto: state.foto,
-    temFoto: !!state.foto,
-    data: isoParaBr(dataIso),
-    hora: horaStr()
-  };
-
-  saveBtn.disabled = true;
-  try{
-    state.registros.unshift(registro);
-    await persist();
-    if(registro.foto){
-      try{
-        storageSet(`foto:${registro.id}`, registro.foto);
-        fotoCache[registro.id] = registro.foto;
-      }catch(err){
-        console.error(err);
-        showMsg('Registro salvo, mas a foto não pôde ser guardada (armazenamento cheio).', false);
-      }
-    }
-    renderLista();
-    resetForm();
-    if(!(registro.foto)){ showMsg('Registro salvo.', false); }
-  }catch(err){
-    state.registros.shift();
-    showMsg('Erro ao salvar. Tente novamente.', true);
-    console.error(err);
-  }finally{
-    saveBtn.disabled = false;
-  }
-});
-
-function showMsg(text, isError){
-  msg.textContent = text;
-  msg.style.color = isError ? 'var(--red)' : 'var(--green)';
-  setTimeout(()=>{ if(msg.textContent === text) msg.textContent=''; }, 2500);
-}
-
-function resetForm(){
-  document.getElementById('endereco').value = '';
-  document.getElementById('numero').value = '';
-  document.getElementById('medidor').value = '';
-  document.getElementById('leitura').value = '';
-  document.getElementById('dataCampo').value = isoHoje();
-  state.etapa = null;
-  document.querySelectorAll('.etapa-btn').forEach(el=>el.classList.remove('selected'));
-  state.desocupado = false;
-  desocupadoSwitch.classList.remove('on');
-  desocupadoSwitch.setAttribute('aria-pressed','false');
-  leituraWrap.classList.remove('disabled');
-  state.foto = null;
-  photoPreview.style.display = 'none';
-}
-
-function storageSet(key, value){
-  localStorage.setItem(key, value);
-}
-
-function storageGet(key){
-  return localStorage.getItem(key);
-}
-
-function storageDelete(key){
-  localStorage.removeItem(key);
-}
-
-async function persist(){
-  const leve = state.registros.map(r => ({
-    id: r.id,
-    endereco: r.endereco,
-    numero: r.numero,
-    medidor: r.medidor,
-    etapa: r.etapa,
-    desocupado: r.desocupado,
-    leitura: r.leitura,
-    temFoto: !!(r.foto || r.temFoto),
-    data: r.data,
-    hora: r.hora
-  }));
-  storageSet(STORAGE_KEY, JSON.stringify(leve));
-}
-
-const fotoCache = {};
-
-async function obterFoto(id){
-  if(fotoCache[id]) return fotoCache[id];
-  const value = storageGet(`foto:${id}`);
-  if(value){
-    fotoCache[id] = value;
-    return value;
-  }
-  return null;
-}
-
-function carregarFotosVisiveis(){
-  state.registros.forEach(r => {
-    if(!r.temFoto || r.foto) return;
-    obterFoto(r.id).then(foto => {
-      if(!foto) return;
-      r.foto = foto;
-      const el = document.querySelector(`.registro[data-id="${r.id}"] .registro-thumb-placeholder`);
-      if(el){
-        const img = document.createElement('img');
-        img.className = 'registro-thumb';
-        img.src = foto;
-        el.replaceWith(img);
-      }
-      const acoes = document.querySelector(`.registro[data-id="${r.id}"] .registro-acoes`);
-      if(acoes && !acoes.querySelector('[data-share]')){
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'share-btn';
-        btn.title = 'Compartilhar foto';
-        btn.textContent = '📤';
-        btn.setAttribute('data-share', r.id);
-        btn.addEventListener('click', () => compartilharFoto(r));
-        acoes.insertBefore(btn, acoes.firstChild);
-      }
-    });
-  });
-}
-
-async function carregar(){
-  try{
-    const value = storageGet(STORAGE_KEY);
-    state.registros = value ? JSON.parse(value) : [];
-  }catch(err){
-    state.registros = [];
-  }
-  renderLista();
-}
-
-function renderLista(){
-  const lista = document.getElementById('lista');
-  const hoje = hojeStr();
-  const doDia = state.registros.filter(r => r.data === hoje);
-  document.getElementById('contHoje').textContent = doDia.length;
-
-  if(state.registros.length === 0){
-    lista.innerHTML = '<div class="empty">Nenhum registro ainda. Preencha o formulário acima.</div>';
+  c.toBlob(function(blob){
+   if(!blob){
+    alert("Não foi possível preparar a imagem.");
     return;
-  }
+   }
+   var file=new File([blob],"medidor-etapa-"+etapaAtual+".jpg",{type:"image/jpeg"});
 
-  lista.innerHTML = state.registros.map(r => `
-    <div class="registro" data-id="${r.id}">
-      ${r.foto
-        ? `<img class="registro-thumb" src="${r.foto}">`
-        : `<div class="registro-thumb-placeholder"></div>`}
-      <div class="registro-body">
-        <div class="registro-endereco">${escapeHtml(r.endereco)}${r.numero ? ', ' + escapeHtml(r.numero) : ''}</div>
-        <div class="registro-meta mono">Medidor ${escapeHtml(r.medidor || '')}</div>
-        <div class="registro-meta">
-          <span class="badge">Etapa ${r.etapa}</span>
-          ${r.desocupado ? '<span class="badge vago">Desocupado</span>' : ''}
-        </div>
-        <div class="registro-meta mono">
-          ${r.desocupado ? '' : (escapeHtml(r.leitura || '') + ' · ')}${r.data} ${r.hora}
-        </div>
-      </div>
-      <div class="registro-acoes">
-        ${(r.foto || r.temFoto) ? `<button type="button" class="share-btn" data-share="${r.id}" title="Compartilhar foto">📤</button>` : ''}
-        <button type="button" class="del-btn" data-del="${r.id}">✕</button>
-      </div>
-    </div>
-  `).join('');
-
-  lista.querySelectorAll('[data-share]').forEach(btn=>{
-    btn.addEventListener('click', async () => {
-      const id = btn.getAttribute('data-share');
-      const r = state.registros.find(reg=>reg.id===id);
-      if(!r) return;
-      if(!r.foto){ r.foto = await obterFoto(id); }
-      if(r.foto){ compartilharFoto(r); }
-      else{ showMsg('Foto não encontrada.', true); }
-    });
-  });
-
-  lista.querySelectorAll('[data-del]').forEach(btn=>{
-    btn.addEventListener('click', async () => {
-      const id = btn.getAttribute('data-del');
-      const idx = state.registros.findIndex(r=>r.id===id);
-      if(idx === -1) return;
-      const removed = state.registros.splice(idx,1)[0];
-      try{
-        await persist();
-        if(removed.temFoto || removed.foto){
-          try{ storageDelete(`foto:${id}`); }catch(e){}
-          delete fotoCache[id];
-        }
-        renderLista();
-      }catch(err){
-        state.registros.splice(idx,0,removed);
-        showMsg('Erro ao excluir.', true);
-      }
-    });
-  });
-
-  carregarFotosVisiveis();
-}
-
-function dataUrlParaBlob(dataUrl){
-  const [header, base64] = dataUrl.split(',');
-  const mimeMatch = header.match(/data:(.*?);base64/);
-  const mime = mimeMatch ? mimeMatch[1] : 'image/jpeg';
-  const binario = atob(base64);
-  const bytes = new Uint8Array(binario.length);
-  for(let i = 0; i < binario.length; i++){
-    bytes[i] = binario.charCodeAt(i);
-  }
-  return new Blob([bytes], { type: mime });
-}
-
-const photoModal = document.getElementById('photoModal');
-const photoModalImg = document.getElementById('photoModalImg');
-const photoModalInfo = document.getElementById('photoModalInfo');
-const photoModalClose = document.getElementById('photoModalClose');
-
-function compostaComTexto(foto, linhas){
-  return new Promise((resolve) => {
-    const img = new Image();
-    img.onload = () => {
-      const canvas = document.createElement('canvas');
-      canvas.width = img.width;
-      canvas.height = img.height;
-      const ctx = canvas.getContext('2d');
-      ctx.drawImage(img, 0, 0);
-
-      const fontSize = Math.max(20, Math.round(canvas.width * 0.045));
-      const padding = Math.round(fontSize * 0.7);
-      const alturaLinha = Math.round(fontSize * 1.3);
-      const barraAltura = padding * 2 + linhas.length * alturaLinha;
-
-      ctx.fillStyle = 'rgba(0,0,0,0.6)';
-      ctx.fillRect(0, canvas.height - barraAltura, canvas.width, barraAltura);
-
-      ctx.fillStyle = '#FFFFFF';
-      ctx.font = `bold ${fontSize}px sans-serif`;
-      ctx.textBaseline = 'top';
-      linhas.forEach((linha, i) => {
-        ctx.fillText(linha, padding, canvas.height - barraAltura + padding + i * alturaLinha);
-      });
-
-      resolve(canvas.toDataURL('image/jpeg', 0.85));
-    };
-    img.onerror = () => resolve(foto);
-    img.src = foto;
-  });
-}
-
-async function compartilharFoto(r){
-  const linha1 = `${r.endereco}${r.numero ? ', ' + r.numero : ''}`;
-  const linha2 = r.medidor ? `Medidor ${r.medidor}` : '';
-  const linhas = [linha1, linha2].filter(Boolean);
-
-  photoModalInfo.textContent = linhas.join(' · ');
-  photoModal.style.display = 'flex';
-  photoModalImg.src = r.foto;
-
-  const fotoComTexto = await compostaComTexto(r.foto, linhas);
-  photoModalImg.src = fotoComTexto;
-}
-
-photoModalClose.addEventListener('click', () => {
-  photoModal.style.display = 'none';
-  photoModalImg.src = '';
-});
-
-function escapeHtml(str){
-  const d = document.createElement('div');
-  d.textContent = str;
-  return d.innerHTML;
-}
-
-// backup: exportar e importar
-const exportarBtn = document.getElementById('exportarBtn');
-const importarBtn = document.getElementById('importarBtn');
-const importarInput = document.getElementById('importarInput');
-
-exportarBtn.addEventListener('click', () => {
-  try{
-    const registrosLeves = JSON.parse(storageGet(STORAGE_KEY) || '[]');
-    const fotos = {};
-    registrosLeves.forEach(r => {
-      if(r.temFoto){
-        const foto = storageGet(`foto:${r.id}`);
-        if(foto) fotos[r.id] = foto;
-      }
-    });
-    const backup = { registros: registrosLeves, fotos, exportadoEm: new Date().toISOString() };
-    const blob = new Blob([JSON.stringify(backup)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `backup-leitura-parada-${isoHoje()}.json`;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    URL.revokeObjectURL(url);
-    showMsg('Backup exportado.', false);
-  }catch(err){
-    showMsg('Não foi possível exportar o backup.', true);
-    console.error(err);
-  }
-});
-
-importarBtn.addEventListener('click', () => importarInput.click());
-
-importarInput.addEventListener('change', (e) => {
-  const file = e.target.files[0];
-  importarInput.value = '';
-  if(!file) return;
-  const reader = new FileReader();
-  reader.onload = async (ev) => {
+   if(navigator.share){
+    var podeCompartilhar=true;
     try{
-      const backup = JSON.parse(ev.target.result);
-      if(!backup || !Array.isArray(backup.registros)) throw new Error('Arquivo de backup inválido');
-      storageSet(STORAGE_KEY, JSON.stringify(backup.registros));
-      Object.keys(backup.fotos || {}).forEach(id => {
-        storageSet(`foto:${id}`, backup.fotos[id]);
-      });
-      Object.keys(fotoCache).forEach(k => delete fotoCache[k]);
-      showMsg('Backup importado.', false);
-      await carregar();
-    }catch(err){
-      showMsg('Não foi possível importar esse arquivo.', true);
-      console.error(err);
+     if(navigator.canShare) podeCompartilhar=navigator.canShare({files:[file]});
+    }catch(e){podeCompartilhar=false;}
+
+    if(podeCompartilhar){
+     navigator.share({
+      title:"Medidor - Etapa "+etapaAtual,
+      text:texto,
+      files:[file]
+     }).catch(function(err){
+      if(err && err.name!=="AbortError"){
+       baixarImagem(blob,file.name);
+      }
+     });
+     return;
     }
-  };
-  reader.readAsText(file);
+   }
+   baixarImagem(blob,file.name);
+  },"image/jpeg",.92);
+ };
+ img.src=fotoAtual;
 });
 
-carregar();
-</script>
+function baixarImagem(blob,nome){
+ var u=URL.createObjectURL(blob);
+ var a=document.createElement("a");
+ a.href=u;
+ a.download=nome;
+ document.body.appendChild(a);
+ a.click();
+ a.remove();
+ setTimeout(function(){URL.revokeObjectURL(u);},1500);
+}
 
+/* SALVAR */
+document.getElementById("save").addEventListener("click",function(){
+ if(!etapaAtual){alert("Selecione uma etapa de 1 a 18.");return;}
+ if(!endereco.value.trim()){alert("Digite o endereço.");return;}
+ if(!medidor.value.trim()){alert("Digite o número do medidor.");return;}
+ if(!desocupado&&!leitura.value.trim()){alert("Digite a leitura ou marque imóvel desocupado.");return;}
+
+ guardarEtapaAtual();
+
+ registros.unshift({
+  id:Date.now(),
+  etapa:etapaAtual,
+  data:data.value,
+  endereco:endereco.value.trim(),
+  numero:numero.value.trim(),
+  medidor:medidor.value.trim(),
+  leitura:desocupado?"":leitura.value.trim(),
+  desocupado:desocupado,
+  foto:fotoAtual
+ });
+
+ localStorage.setItem(REGISTROS,JSON.stringify(registros));
+ render();
+ alert("Registro salvo.");
+});
+
+/* LIMPAR */
+document.getElementById("clear").addEventListener("click",function(){
+ etapaAtual=0;
+ dadosEtapas={};
+ fotoAtual=null;
+ desocupado=false;
+ localStorage.removeItem(ETAPAS);
+
+ data.value=hoje();
+ endereco.value="";
+ numero.value="";
+ medidor.value="";
+ leitura.value="";
+ leitura.disabled=false;
+ leitura.style.opacity="1";
+ vacant.checked=false;
+
+ cameraInput.value="";
+ galleryInput.value="";
+ photoImg.removeAttribute("src");
+ preview.style.display="none";
+ photoTools.style.display="none";
+ cropPanel.style.display="none";
+
+ document.querySelectorAll(".stage-radio").forEach(function(r){r.checked=false;});
+});
+
+/* REGISTROS */
+function esc(v){
+ return String(v==null?"":v).replace(/[&<>"']/g,function(c){
+  return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];
+ });
+}
+
+function render(){
+ if(!registros.length){
+  records.innerHTML='<span style="font-size:13px;color:#66736a">Nenhum registro salvo.</span>';
+  return;
+ }
+ records.innerHTML="";
+ registros.forEach(function(r){
+  var div=document.createElement("div");
+  div.className="record";
+  div.innerHTML=
+   "<b>"+esc(r.endereco)+(r.numero?" - "+esc(r.numero):"")+"</b>"+
+   '<span class="tag">Etapa '+esc(r.etapa)+'</span>'+
+   '<span class="tag">'+(r.data?r.data.split("-").reverse().join("/"):"")+"</span>"+
+   "<div>Medidor: <b>"+esc(r.medidor)+"</b></div>"+
+   (r.desocupado?"<div><b>Imóvel desocupado</b></div>":"<div>Leitura: <b>"+esc(r.leitura)+"</b></div>")+
+   (r.foto?'<div class="preview" style="display:block"><img src="'+r.foto+'"></div>':"")+
+   '<button type="button" class="btn red" data-del="'+r.id+'">Excluir</button>';
+  records.appendChild(div);
+ });
+
+ records.querySelectorAll("[data-del]").forEach(function(b){
+  b.addEventListener("click",function(){
+   if(confirm("Excluir este registro?")){
+    registros=registros.filter(function(r){return String(r.id)!==String(b.dataset.del);});
+    localStorage.setItem(REGISTROS,JSON.stringify(registros));
+    render();
+   }
+  });
+ });
+}
+
+/* BACKUP */
+document.getElementById("export").addEventListener("click",function(){
+ var blob=new Blob([JSON.stringify({registros:registros,etapas:dadosEtapas})],{type:"application/json"});
+ baixarImagem(blob,"backup-imoveis-vagos.json");
+});
+
+document.getElementById("import").addEventListener("change",function(e){
+ var f=e.target.files[0];
+ if(!f)return;
+ var r=new FileReader();
+ r.onload=function(){
+  try{
+   var x=JSON.parse(r.result);
+   registros=x.registros||[];
+   dadosEtapas=x.etapas||{};
+   localStorage.setItem(REGISTROS,JSON.stringify(registros));
+   guardarEtapas();
+   render();
+   alert("Backup importado.");
+  }catch(err){
+   alert("Backup inválido.");
+  }
+ };
+ r.readAsText(f);
+});
+
+/* INÍCIO */
+try{registros=JSON.parse(localStorage.getItem(REGISTROS)||"[]");}
+catch(e){registros=[];}
+
+try{dadosEtapas=JSON.parse(localStorage.getItem(ETAPAS)||"{}");}
+catch(e){dadosEtapas={};}
+
+data.value=hoje();
+render();
+
+})();
+</script>
 </body>
 </html>
