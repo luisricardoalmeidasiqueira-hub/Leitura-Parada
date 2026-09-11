@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Leitura Parada</title>
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<style>
+  :root{
+    --bg: #EEF1F3;
+    --surface: #FFFFFF;
+    --line: #D7DEE3;
+    --text: #1B2733;
+    --text-soft: #5B6B78;
+    --copper: #A6541D;
+    --copper-dark: #7E3F14;
+    --verde-escuro: #1E5631;
+    --verde-escuro-dark: #143C21;
+    --teal: #2D6E7E;
+    --teal-dark: #1F4E5A;
+    --green: #3F7D53;
+    --red: #B23A3A;
+    --radius: 10px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .mono{ font-family:"SF Mono",SFMono-Regular,Menlo,Consolas,monospace; }
+
+  header{
+    position:sticky; top:0; z-index:10;
+    background:var(--teal-dark);
+    color:#fff;
+    padding:16px 18px 14px;
+    display:flex; justify-content:space-between; align-items:baseline;
+  }
+  header h1{ font-size:18px; margin:0; font-weight:600; letter-spacing:.2px; }
+  header .data-hoje{ font-size:13px; opacity:.85; }
+
+  main{ padding:14px 14px 100px; max-width:520px; margin:0 auto; }
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:16px;
+    margin-bottom:14px;
+  }
+  label{
+    display:block;
+    font-size:13px;
+    color:var(--text-soft);
+    margin-bottom:6px;
+    font-weight:600;
+  }
+  input[type=text], input[type=number]{
+    width:100%;
+    padding:12px 12px;
+    border:1px solid var(--line);
+    border-radius:8px;
+    font-size:16px;
+    background:#FBFBFA;
+    color:var(--text);
+  }
+  input:focus{ outline:2px solid var(--teal); outline-offset:1px; }
+
+  .field{ margin-bottom:16px; }
+  .field:last-child{ margin-bottom:0; }
+
+  .endereco-row{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:10px;
+  }
+
+  .etapa-grid{
+    display:grid;
+    grid-template-columns:repeat(6, 1fr);
+    gap:6px;
+  }
+  .etapa-btn{
+    padding:10px 0;
+    border-radius:8px;
+    border:1px solid var(--line);
+    background:#FBFBFA;
+    color:var(--text);
+    font-size:14px;
+    font-weight:600;
+    font-family:inherit;
+  }
+  .etapa-btn.selected{
+    background:var(--teal);
+    border-color:var(--teal);
+    color:#fff;
+  }
+
+  .toggle-row{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:12px 14px;
+    background:#FBFBFA;
+    border:1px solid var(--line);
+    border-radius:8px;
+  }
+  .toggle-row span{ font-size:15px; font-weight:500; }
+  .switch{
+    width:46px; height:28px; border-radius:999px;
+    background:#C7CFD4; position:relative; flex:none;
+    border:none; padding:0;
+  }
+  .switch::after{
+    content:''; position:absolute; top:3px; left:3px;
+    width:22px; height:22px; border-radius:50%;
+    background:#fff; transition:left .15s ease;
+  }
+  .switch.on{ background:var(--green); }
+  .switch.on::after{ left:21px; }
+
+  .leitura-wrap.disabled{ opacity:.4; pointer-events:none; }
+
+  .photo-actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+  }
+  .photo-btn{
+    width:100%;
+    padding:12px;
+    border-radius:8px;
+    border:1px dashed var(--verde-escuro);
+    background:#EAF3ED;
+    color:var(--verde-escuro-dark);
+    font-size:14px;
+    font-weight:600;
+    font-family:inherit;
+  }
+  .photo-preview{
+    margin-top:10px;
+    position:relative;
+    display:inline-block;
+  }
+  .photo-preview img{
+    max-width:100%;
+    max-height:220px;
+    border-radius:8px;
+    display:block;
+    border:1px solid var(--line);
+  }
+  .photo-remove{
+    position:absolute; top:6px; right:6px;
+    background:rgba(27,39,51,.75);
+    color:#fff; border:none;
+    width:26px; height:26px; border-radius:50%;
+    font-size:14px; line-height:1;
+    font-family:inherit;
+  }
+
+  .save-btn{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:8px;
+    background:var(--verde-escuro);
+    color:#fff;
+    font-size:16px;
+    font-weight:700;
+    font-family:inherit;
+  }
+  .save-btn:active{ background:var(--verde-escuro-dark); }
+  .save-btn:disabled{ background:#C7CFD4; color:#8A959D; }
+
+  .msg{
+    text-align:center; font-size:13px; color:var(--green);
+    margin-top:8px; min-height:16px;
+  }
+
+  .section-title{
+    font-size:13px; font-weight:700; text-transform:none;
+    color:var(--text-soft); margin:22px 2px 10px;
+    display:flex; justify-content:space-between;
+  }
+
+  .registro{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:12px 14px;
+    margin-bottom:10px;
+    display:flex; gap:12px; align-items:flex-start;
+  }
+  .registro-thumb{
+    width:52px; height:52px; border-radius:6px;
+    object-fit:cover; flex:none;
+    border:1px solid var(--line);
+  }
+  .registro-thumb-placeholder{
+    width:52px; height:52px; border-radius:6px;
+    flex:none; background:#EEF1F3;
+    border:1px solid var(--line);
+  }
+  .registro-body{ flex:1; min-width:0; }
+  .registro-endereco{ font-size:15px; font-weight:600; word-break:break-word; }
+  .registro-meta{ font-size:13px; color:var(--text-soft); margin-top:3px; }
+  .badge{
+    display:inline-block;
+    font-size:12px; font-weight:700;
+    padding:2px 7px; border-radius:5px;
+    background:var(--teal); color:#fff;
+    margin-right:6px;
+  }
+  .badge.vago{ background:var(--red); }
+  .registro-acoes{
+    display:flex; flex-direction:column; align-items:center;
+    gap:6px; flex:none;
+  }
+  .share-btn{
+    background:none; border:none; color:var(--verde-escuro);
+    font-size:17px; padding:2px 4px;
+    font-family:inherit;
+  }
+  .del-btn{
+    background:none; border:none; color:var(--text-soft);
+    font-size:18px; padding:2px 4px; flex:none;
+    font-family:inherit;
+  }
+
+  .empty{
+    text-align:center; color:var(--text-soft);
+    font-size:14px; padding:24px 10px;
+  }
+
+  .rodape{
+    text-align:center;
+    font-size:12px;
+    color:var(--text-soft);
+    padding:24px 10px 10px;
+  }
+
+  .backup-card{ padding:14px; }
+  .backup-aviso{
+    font-size:13px;
+    color:var(--text-soft);
+    margin:0 0 12px;
+  }
+  .backup-actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+  }
+  .backup-btn{
+    padding:12px;
+    border-radius:8px;
+    border:1px solid var(--teal);
+    background:#fff;
+    color:var(--teal-dark);
+    font-size:14px;
+    font-weight:700;
+    font-family:inherit;
+  }
+
+  input[type=file]{ display:none; }
+
+  .crop-modal{
+    display:none;
+    position:fixed; inset:0; z-index:100;
+    background:#0F141A;
+    flex-direction:column;
+  }
+  .crop-stage{
+    position:relative;
+    flex:1;
+    min-height:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    touch-action:none;
+    background:#0F141A;
+  }
+  .crop-stage img{
+    max-width:100%;
+    max-height:100%;
+    display:block;
+    -webkit-user-drag:none;
+    user-select:none;
+    pointer-events:none;
+  }
+  .crop-box{
+    position:absolute;
+    border:2px solid #fff;
+    box-shadow:0 0 0 2000px rgba(0,0,0,.55);
+    touch-action:none;
+  }
+  .crop-handle{
+    position:absolute;
+    right:-14px; bottom:-14px;
+    width:28px; height:28px;
+    background:#fff;
+    border-radius:50%;
+    border:2px solid var(--verde-escuro);
+    touch-action:none;
+  }
+  .crop-hint{
+    text-align:center;
+    color:#B8C2CC;
+    font-size:13px;
+    padding:8px 14px 0;
+    flex:none;
+  }
+  .crop-actions{
+    flex:none;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    padding:14px;
+    background:#0F141A;
+  }
+  .crop-actions button{
+    padding:13px;
+    border:none;
+    border-radius:8px;
+    font-size:15px;
+    font-weight:700;
+    font-family:inherit;
+  }
+  #cropCancelBtn{ background:#3A4552; color:#fff; }
+  #cropConfirmBtn{ background:var(--verde-escuro); color:#fff; }
+
+  .photo-modal{
+    display:none;
+    position:fixed; inset:0; z-index:100;
+    background:#0F141A;
+    flex-direction:column;
+  }
+  .photo-modal-top{
+    flex:none;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 16px;
+    color:#fff;
+    font-size:14px;
+  }
+  .photo-modal-top button{
+    background:none; border:none; color:#fff;
+    font-size:20px; padding:2px 8px;
+    font-family:inherit;
+  }
+  .photo-modal-body{
+    flex:1; min-height:0;
+    display:flex; align-items:center; justify-content:center;
+    padding:0 10px;
+  }
+  .photo-modal-body img{
+    max-width:100%; max-height:100%;
+    border-radius:6px;
+  }
+  .photo-modal-hint{
+    flex:none;
+    text-align:center;
+    color:#B8C2CC;
+    font-size:13px;
+    padding:10px 16px 18px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Leitura Parada</h1>
+</header>
+
+<main>
+
+  <div class="card">
+    <div class="field">
+      <label for="dataCampo">Data</label>
+      <input type="date" id="dataCampo">
+    </div>
+
+    <div class="field">
+      <div class="endereco-row">
+        <div>
+          <label for="endereco">Endereço</label>
+          <input type="text" id="endereco" placeholder="Rua, bairro">
+        </div>
+        <div>
+          <label for="numero">Número</label>
+          <input type="text" inputmode="numeric" id="numero" placeholder="Nº">
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="medidor">Número do medidor</label>
+      <input type="text" id="medidor" placeholder="Ex: 4A521B9">
+    </div>
+
+    <div class="field leitura-wrap" id="leituraWrap">
+      <label for="leitura">Leitura</label>
+      <input type="number" inputmode="numeric" id="leitura" placeholder="Ex: 04521">
+    </div>
+
+    <div class="field">
+      <label>Etapa</label>
+      <div class="etapa-grid" id="etapaGrid"></div>
+    </div>
+
+    <div class="field">
+      <div class="toggle-row">
+        <span>Imóvel desocupado</span>
+        <button type="button" class="switch" id="desocupadoSwitch" aria-pressed="false"></button>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Foto</label>
+      <div class="photo-actions">
+        <button type="button" class="photo-btn" id="photoCameraBtn">📷 Tirar foto</button>
+        <button type="button" class="photo-btn" id="photoGalleryBtn">🖼️ Escolher da galeria</button>
+      </div>
+      <input type="file" id="photoInputCamera" accept="image/*" capture="environment">
+      <input type="file" id="photoInputGallery" accept="image/*">
+      <div class="photo-preview" id="photoPreview" style="display:none;">
+        <img id="photoImg" src="">
+        <button type="button" class="photo-remove" id="photoRemove">✕</button>
+      </div>
+    </div>
+
+    <div class="field">
+      <button type="button" class="save-btn" id="saveBtn">Salvar registro</button>
+      <div class="msg" id="msg"></div>
+    </div>
+  </div>
+
+  <div class="section-title">
+    <span>Registros de hoje</span>
+    <span id="contHoje" class="mono">0</span>
+  </div>
+  <div id="lista"></div>
+
+  <div class="section-title">
+    <span>Backup dos dados</span>
+  </div>
+  <div class="card backup-card">
+    <p class="backup-aviso">Faça isso de vez em quando para não perder os registros se o app "esquecer" os dados.</p>
+    <div class="backup-actions">
+      <button type="button" class="backup-btn" id="exportarBtn">Exportar backup</button>
+      <button type="button" class="backup-btn" id="importarBtn">Importar backup</button>
+    </div>
+    <input type="file" id="importarInput" accept="application/json">
+  </div>
+
+  <div class="rodape">Planilha criada por Luís Ricardo</div>
+
+</main>
+
+<div class="crop-modal" id="cropModal">
+  <div class="crop-stage" id="cropStage">
+    <img id="cropImage" src="" alt="">
+    <div class="crop-box" id="cropBox">
+      <div class="crop-handle" id="cropHandle"></div>
+    </div>
+  </div>
+  <div class="crop-hint">Arraste para mover, use o círculo para redimensionar</div>
+  <div class="crop-actions">
+    <button type="button" id="cropCancelBtn">Cancelar</button>
+    <button type="button" id="cropConfirmBtn">Recortar</button>
+  </div>
+</div>
+
+<div class="photo-modal" id="photoModal">
+  <div class="photo-modal-top">
+    <span id="photoModalInfo"></span>
+    <button type="button" id="photoModalClose">✕</button>
+  </div>
+  <div class="photo-modal-body">
+    <img id="photoModalImg" src="" alt="Foto do registro">
+  </div>
+  <div class="photo-modal-hint">Toque e segure a foto para salvar ou compartilhar</div>
+</div>
+
+<script>
+const STORAGE_KEY = 'registros-leitura';
+
+let state = {
+  etapa: null,
+  desocupado: false,
+  foto: null,
+  registros: []
+};
+
+function hojeStr(){
+  const d = new Date();
+  const dd = String(d.getDate()).padStart(2,'0');
+  const mm = String(d.getMonth()+1).padStart(2,'0');
+  const yyyy = d.getFullYear();
+  return `${dd}/${mm}/${yyyy}`;
+}
+function horaStr(){
+  const d = new Date();
+  return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
+}
+
+function isoHoje(){
+  const d = new Date();
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth()+1).padStart(2,'0');
+  const dd = String(d.getDate()).padStart(2,'0');
+  return `${yyyy}-${mm}-${dd}`;
+}
+function isoParaBr(iso){
+  const [yyyy,mm,dd] = iso.split('-');
+  return `${dd}/${mm}/${yyyy}`;
+}
+
+document.getElementById('dataCampo').value = isoHoje();
+
+// capitaliza a primeira letra do endereço
+const enderecoInput = document.getElementById('endereco');
+enderecoInput.addEventListener('input', () => {
+  if(enderecoInput.value.length === 0) return;
+  const start = enderecoInput.selectionStart;
+  const end = enderecoInput.selectionEnd;
+  enderecoInput.value = enderecoInput.value.charAt(0).toUpperCase() + enderecoInput.value.slice(1);
+  enderecoInput.setSelectionRange(start, end);
+});
+
+// build etapa buttons 1-18
+const etapaGrid = document.getElementById('etapaGrid');
+for(let i=1;i<=18;i++){
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.className = 'etapa-btn';
+  b.textContent = i;
+  b.dataset.etapa = i;
+  b.addEventListener('click', () => {
+    state.etapa = (state.etapa === i) ? null : i;
+    document.querySelectorAll('.etapa-btn').forEach(el=>{
+      el.classList.toggle('selected', Number(el.dataset.etapa) === state.etapa);
+    });
+  });
+  etapaGrid.appendChild(b);
+}
+
+// desocupado switch
+const desocupadoSwitch = document.getElementById('desocupadoSwitch');
+const leituraWrap = document.getElementById('leituraWrap');
+desocupadoSwitch.addEventListener('click', () => {
+  state.desocupado = !state.desocupado;
+  desocupadoSwitch.classList.toggle('on', state.desocupado);
+  desocupadoSwitch.setAttribute('aria-pressed', state.desocupado);
+  leituraWrap.classList.toggle('disabled', state.desocupado);
+});
+
+// photo
+const photoCameraBtn = document.getElementById('photoCameraBtn');
+const photoGalleryBtn = document.getElementById('photoGalleryBtn');
+const photoInputCamera = document.getElementById('photoInputCamera');
+const photoInputGallery = document.getElementById('photoInputGallery');
+const photoPreview = document.getElementById('photoPreview');
+const photoImg = document.getElementById('photoImg');
+const photoRemove = document.getElementById('photoRemove');
+
+photoCameraBtn.addEventListener('click', () => photoInputCamera.click());
+photoGalleryBtn.addEventListener('click', () => photoInputGallery.click());
+
+function definirFoto(dataUrl){
+  state.foto = dataUrl;
+  photoImg.src = dataUrl;
+  photoPreview.style.display = 'inline-block';
+}
+
+function processarFoto(file){
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    const img = new Image();
+    img.onload = () => {
+      const maxW = 900;
+      const scale = Math.min(1, maxW / img.width);
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width * scale;
+      canvas.height = img.height * scale;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      definirFoto(canvas.toDataURL('image/jpeg', 0.65));
+    };
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+photoInputCamera.addEventListener('change', (e) => {
+  processarFoto(e.target.files[0]);
+  photoInputCamera.value = '';
+});
+
+// galeria: abre o recorte antes de usar a foto
+const cropModal = document.getElementById('cropModal');
+const cropStage = document.getElementById('cropStage');
+const cropImage = document.getElementById('cropImage');
+const cropBox = document.getElementById('cropBox');
+const cropHandle = document.getElementById('cropHandle');
+const cropCancelBtn = document.getElementById('cropCancelBtn');
+const cropConfirmBtn = document.getElementById('cropConfirmBtn');
+
+let dragMode = null;
+let dragStartX = 0, dragStartY = 0;
+let boxStartLeft = 0, boxStartTop = 0, boxStartW = 0, boxStartH = 0;
+
+function iniciarCropBox(){
+  const stageRect = cropStage.getBoundingClientRect();
+  const imgRect = cropImage.getBoundingClientRect();
+  const imgLeft = imgRect.left - stageRect.left;
+  const imgTop = imgRect.top - stageRect.top;
+  const w = imgRect.width * 0.8;
+  const h = imgRect.height * 0.8;
+  cropBox.style.width = w + 'px';
+  cropBox.style.height = h + 'px';
+  cropBox.style.left = (imgLeft + (imgRect.width - w) / 2) + 'px';
+  cropBox.style.top = (imgTop + (imgRect.height - h) / 2) + 'px';
+}
+
+photoInputGallery.addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  photoInputGallery.value = '';
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    cropImage.onload = () => { iniciarCropBox(); };
+    cropImage.onerror = () => {
+      cropModal.style.display = 'none';
+      showMsg('Não foi possível abrir essa foto para recortar. Tente outra foto.', true);
+    };
+    cropImage.src = ev.target.result;
+    cropModal.style.display = 'flex';
+  };
+  reader.onerror = () => {
+    showMsg('Não foi possível ler essa foto.', true);
+  };
+  reader.readAsDataURL(file);
+});
+
+function pontoDoEvento(e){
+  if(e.touches && e.touches.length){
+    return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+  }
+  return { x: e.clientX, y: e.clientY };
+}
+
+function cropInicio(e){
+  dragMode = (e.target === cropHandle) ? 'resize' : 'move';
+  const p = pontoDoEvento(e);
+  dragStartX = p.x;
+  dragStartY = p.y;
+  const stageRect = cropStage.getBoundingClientRect();
+  const boxRect = cropBox.getBoundingClientRect();
+  boxStartLeft = boxRect.left - stageRect.left;
+  boxStartTop = boxRect.top - stageRect.top;
+  boxStartW = boxRect.width;
+  boxStartH = boxRect.height;
+  e.preventDefault();
+}
+
+function cropMovimento(e){
+  if(!dragMode) return;
+  const p = pontoDoEvento(e);
+  const dx = p.x - dragStartX;
+  const dy = p.y - dragStartY;
+  const stageRect = cropStage.getBoundingClientRect();
+  const imgRect = cropImage.getBoundingClientRect();
+  const imgLeft = imgRect.left - stageRect.left;
+  const imgTop = imgRect.top - stageRect.top;
+  const imgRight = imgLeft + imgRect.width;
+  const imgBottom = imgTop + imgRect.height;
+
+  if(dragMode === 'move'){
+    let newLeft = boxStartLeft + dx;
+    let newTop = boxStartTop + dy;
+    newLeft = Math.max(imgLeft, Math.min(newLeft, imgRight - boxStartW));
+    newTop = Math.max(imgTop, Math.min(newTop, imgBottom - boxStartH));
+    cropBox.style.left = newLeft + 'px';
+    cropBox.style.top = newTop + 'px';
+  }else{
+    const minSize = 40;
+    let newW = Math.max(minSize, Math.min(boxStartW + dx, imgRight - boxStartLeft));
+    let newH = Math.max(minSize, Math.min(boxStartH + dy, imgBottom - boxStartTop));
+    cropBox.style.width = newW + 'px';
+    cropBox.style.height = newH + 'px';
+  }
+  e.preventDefault();
+}
+
+function cropFim(){
+  dragMode = null;
+}
+
+cropBox.addEventListener('mousedown', cropInicio);
+document.addEventListener('mousemove', cropMovimento);
+document.addEventListener('mouseup', cropFim);
+
+cropBox.addEventListener('touchstart', cropInicio, { passive:false });
+document.addEventListener('touchmove', cropMovimento, { passive:false });
+document.addEventListener('touchend', cropFim);
+document.addEventListener('touchcancel', cropFim);
+
+function fecharCropModal(){
+  cropModal.style.display = 'none';
+  cropImage.src = '';
+}
+
+cropCancelBtn.addEventListener('click', fecharCropModal);
+
+cropConfirmBtn.addEventListener('click', () => {
+  const imgRect = cropImage.getBoundingClientRect();
+  const boxRect = cropBox.getBoundingClientRect();
+
+  const scaleX = cropImage.naturalWidth / imgRect.width;
+  const scaleY = cropImage.naturalHeight / imgRect.height;
+
+  const sx = (boxRect.left - imgRect.left) * scaleX;
+  const sy = (boxRect.top - imgRect.top) * scaleY;
+  const sw = boxRect.width * scaleX;
+  const sh = boxRect.height * scaleY;
+
+  const maxOut = 1000;
+  const outScale = Math.min(1, maxOut / Math.max(sw, sh));
+
+  const canvas = document.createElement('canvas');
+  canvas.width = sw * outScale;
+  canvas.height = sh * outScale;
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(cropImage, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height);
+
+  definirFoto(canvas.toDataURL('image/jpeg', 0.7));
+  fecharCropModal();
+});
+
+photoRemove.addEventListener('click', () => {
+  state.foto = null;
+  photoPreview.style.display = 'none';
+});
+
+// save
+const saveBtn = document.getElementById('saveBtn');
+const msg = document.getElementById('msg');
+
+saveBtn.addEventListener('click', async () => {
+  const endereco = document.getElementById('endereco').value.trim();
+  const numero = document.getElementById('numero').value.trim();
+  const medidor = document.getElementById('medidor').value.trim();
+  const leituraVal = document.getElementById('leitura').value.trim();
+  const dataIso = document.getElementById('dataCampo').value;
+
+  if(!endereco){ showMsg('Informe o endereço.', true); return; }
+  if(!medidor){ showMsg('Informe o número do medidor.', true); return; }
+  if(!dataIso){ showMsg('Selecione a data.', true); return; }
+  if(!state.etapa){ showMsg('Selecione a etapa.', true); return; }
+  if(!state.desocupado && !leituraVal){ showMsg('Informe a leitura ou marque desocupado.', true); return; }
+
+  const registro = {
+    id: Date.now().toString(36),
+    endereco,
+    numero,
+    medidor,
+    etapa: state.etapa,
+    desocupado: state.desocupado,
+    leitura: state.desocupado ? null : leituraVal,
+    foto: state.foto,
+    temFoto: !!state.foto,
+    data: isoParaBr(dataIso),
+    hora: horaStr()
+  };
+
+  saveBtn.disabled = true;
+  try{
+    state.registros.unshift(registro);
+    await persist();
+    if(registro.foto){
+      try{
+        storageSet(`foto:${registro.id}`, registro.foto);
+        fotoCache[registro.id] = registro.foto;
+      }catch(err){
+        console.error(err);
+        showMsg('Registro salvo, mas a foto não pôde ser guardada (armazenamento cheio).', false);
+      }
+    }
+    renderLista();
+    resetForm();
+    if(!(registro.foto)){ showMsg('Registro salvo.', false); }
+  }catch(err){
+    state.registros.shift();
+    showMsg('Erro ao salvar. Tente novamente.', true);
+    console.error(err);
+  }finally{
+    saveBtn.disabled = false;
+  }
+});
+
+function showMsg(text, isError){
+  msg.textContent = text;
+  msg.style.color = isError ? 'var(--red)' : 'var(--green)';
+  setTimeout(()=>{ if(msg.textContent === text) msg.textContent=''; }, 2500);
+}
+
+function resetForm(){
+  document.getElementById('endereco').value = '';
+  document.getElementById('numero').value = '';
+  document.getElementById('medidor').value = '';
+  document.getElementById('leitura').value = '';
+  document.getElementById('dataCampo').value = isoHoje();
+  state.etapa = null;
+  document.querySelectorAll('.etapa-btn').forEach(el=>el.classList.remove('selected'));
+  state.desocupado = false;
+  desocupadoSwitch.classList.remove('on');
+  desocupadoSwitch.setAttribute('aria-pressed','false');
+  leituraWrap.classList.remove('disabled');
+  state.foto = null;
+  photoPreview.style.display = 'none';
+}
+
+function storageSet(key, value){
+  localStorage.setItem(key, value);
+}
+
+function storageGet(key){
+  return localStorage.getItem(key);
+}
+
+function storageDelete(key){
+  localStorage.removeItem(key);
+}
+
+async function persist(){
+  const leve = state.registros.map(r => ({
+    id: r.id,
+    endereco: r.endereco,
+    numero: r.numero,
+    medidor: r.medidor,
+    etapa: r.etapa,
+    desocupado: r.desocupado,
+    leitura: r.leitura,
+    temFoto: !!(r.foto || r.temFoto),
+    data: r.data,
+    hora: r.hora
+  }));
+  storageSet(STORAGE_KEY, JSON.stringify(leve));
+}
+
+const fotoCache = {};
+
+async function obterFoto(id){
+  if(fotoCache[id]) return fotoCache[id];
+  const value = storageGet(`foto:${id}`);
+  if(value){
+    fotoCache[id] = value;
+    return value;
+  }
+  return null;
+}
+
+function carregarFotosVisiveis(){
+  state.registros.forEach(r => {
+    if(!r.temFoto || r.foto) return;
+    obterFoto(r.id).then(foto => {
+      if(!foto) return;
+      r.foto = foto;
+      const el = document.querySelector(`.registro[data-id="${r.id}"] .registro-thumb-placeholder`);
+      if(el){
+        const img = document.createElement('img');
+        img.className = 'registro-thumb';
+        img.src = foto;
+        el.replaceWith(img);
+      }
+      const acoes = document.querySelector(`.registro[data-id="${r.id}"] .registro-acoes`);
+      if(acoes && !acoes.querySelector('[data-share]')){
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'share-btn';
+        btn.title = 'Compartilhar foto';
+        btn.textContent = '📤';
+        btn.setAttribute('data-share', r.id);
+        btn.addEventListener('click', () => compartilharFoto(r));
+        acoes.insertBefore(btn, acoes.firstChild);
+      }
+    });
+  });
+}
+
+async function carregar(){
+  try{
+    const value = storageGet(STORAGE_KEY);
+    state.registros = value ? JSON.parse(value) : [];
+  }catch(err){
+    state.registros = [];
+  }
+  renderLista();
+}
+
+function renderLista(){
+  const lista = document.getElementById('lista');
+  const hoje = hojeStr();
+  const doDia = state.registros.filter(r => r.data === hoje);
+  document.getElementById('contHoje').textContent = doDia.length;
+
+  if(state.registros.length === 0){
+    lista.innerHTML = '<div class="empty">Nenhum registro ainda. Preencha o formulário acima.</div>';
+    return;
+  }
+
+  lista.innerHTML = state.registros.map(r => `
+    <div class="registro" data-id="${r.id}">
+      ${r.foto
+        ? `<img class="registro-thumb" src="${r.foto}">`
+        : `<div class="registro-thumb-placeholder"></div>`}
+      <div class="registro-body">
+        <div class="registro-endereco">${escapeHtml(r.endereco)}${r.numero ? ', ' + escapeHtml(r.numero) : ''}</div>
+        <div class="registro-meta mono">Medidor ${escapeHtml(r.medidor || '')}</div>
+        <div class="registro-meta">
+          <span class="badge">Etapa ${r.etapa}</span>
+          ${r.desocupado ? '<span class="badge vago">Desocupado</span>' : ''}
+        </div>
+        <div class="registro-meta mono">
+          ${r.desocupado ? '' : (escapeHtml(r.leitura || '') + ' · ')}${r.data} ${r.hora}
+        </div>
+      </div>
+      <div class="registro-acoes">
+        ${(r.foto || r.temFoto) ? `<button type="button" class="share-btn" data-share="${r.id}" title="Compartilhar foto">📤</button>` : ''}
+        <button type="button" class="del-btn" data-del="${r.id}">✕</button>
+      </div>
+    </div>
+  `).join('');
+
+  lista.querySelectorAll('[data-share]').forEach(btn=>{
+    btn.addEventListener('click', async () => {
+      const id = btn.getAttribute('data-share');
+      const r = state.registros.find(reg=>reg.id===id);
+      if(!r) return;
+      if(!r.foto){ r.foto = await obterFoto(id); }
+      if(r.foto){ compartilharFoto(r); }
+      else{ showMsg('Foto não encontrada.', true); }
+    });
+  });
+
+  lista.querySelectorAll('[data-del]').forEach(btn=>{
+    btn.addEventListener('click', async () => {
+      const id = btn.getAttribute('data-del');
+      const idx = state.registros.findIndex(r=>r.id===id);
+      if(idx === -1) return;
+      const removed = state.registros.splice(idx,1)[0];
+      try{
+        await persist();
+        if(removed.temFoto || removed.foto){
+          try{ storageDelete(`foto:${id}`); }catch(e){}
+          delete fotoCache[id];
+        }
+        renderLista();
+      }catch(err){
+        state.registros.splice(idx,0,removed);
+        showMsg('Erro ao excluir.', true);
+      }
+    });
+  });
+
+  carregarFotosVisiveis();
+}
+
+function dataUrlParaBlob(dataUrl){
+  const [header, base64] = dataUrl.split(',');
+  const mimeMatch = header.match(/data:(.*?);base64/);
+  const mime = mimeMatch ? mimeMatch[1] : 'image/jpeg';
+  const binario = atob(base64);
+  const bytes = new Uint8Array(binario.length);
+  for(let i = 0; i < binario.length; i++){
+    bytes[i] = binario.charCodeAt(i);
+  }
+  return new Blob([bytes], { type: mime });
+}
+
+const photoModal = document.getElementById('photoModal');
+const photoModalImg = document.getElementById('photoModalImg');
+const photoModalInfo = document.getElementById('photoModalInfo');
+const photoModalClose = document.getElementById('photoModalClose');
+
+function compostaComTexto(foto, linhas){
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width;
+      canvas.height = img.height;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0);
+
+      const fontSize = Math.max(20, Math.round(canvas.width * 0.045));
+      const padding = Math.round(fontSize * 0.7);
+      const alturaLinha = Math.round(fontSize * 1.3);
+      const barraAltura = padding * 2 + linhas.length * alturaLinha;
+
+      ctx.fillStyle = 'rgba(0,0,0,0.6)';
+      ctx.fillRect(0, canvas.height - barraAltura, canvas.width, barraAltura);
+
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = `bold ${fontSize}px sans-serif`;
+      ctx.textBaseline = 'top';
+      linhas.forEach((linha, i) => {
+        ctx.fillText(linha, padding, canvas.height - barraAltura + padding + i * alturaLinha);
+      });
+
+      resolve(canvas.toDataURL('image/jpeg', 0.85));
+    };
+    img.onerror = () => resolve(foto);
+    img.src = foto;
+  });
+}
+
+async function compartilharFoto(r){
+  const linha1 = `${r.endereco}${r.numero ? ', ' + r.numero : ''}`;
+  const linha2 = r.medidor ? `Medidor ${r.medidor}` : '';
+  const linhas = [linha1, linha2].filter(Boolean);
+
+  photoModalInfo.textContent = linhas.join(' · ');
+  photoModal.style.display = 'flex';
+  photoModalImg.src = r.foto;
+
+  const fotoComTexto = await compostaComTexto(r.foto, linhas);
+  photoModalImg.src = fotoComTexto;
+}
+
+photoModalClose.addEventListener('click', () => {
+  photoModal.style.display = 'none';
+  photoModalImg.src = '';
+});
+
+function escapeHtml(str){
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
+}
+
+// backup: exportar e importar
+const exportarBtn = document.getElementById('exportarBtn');
+const importarBtn = document.getElementById('importarBtn');
+const importarInput = document.getElementById('importarInput');
+
+exportarBtn.addEventListener('click', () => {
+  try{
+    const registrosLeves = JSON.parse(storageGet(STORAGE_KEY) || '[]');
+    const fotos = {};
+    registrosLeves.forEach(r => {
+      if(r.temFoto){
+        const foto = storageGet(`foto:${r.id}`);
+        if(foto) fotos[r.id] = foto;
+      }
+    });
+    const backup = { registros: registrosLeves, fotos, exportadoEm: new Date().toISOString() };
+    const blob = new Blob([JSON.stringify(backup)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `backup-leitura-parada-${isoHoje()}.json`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+    showMsg('Backup exportado.', false);
+  }catch(err){
+    showMsg('Não foi possível exportar o backup.', true);
+    console.error(err);
+  }
+});
+
+importarBtn.addEventListener('click', () => importarInput.click());
+
+importarInput.addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  importarInput.value = '';
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = async (ev) => {
+    try{
+      const backup = JSON.parse(ev.target.result);
+      if(!backup || !Array.isArray(backup.registros)) throw new Error('Arquivo de backup inválido');
+      storageSet(STORAGE_KEY, JSON.stringify(backup.registros));
+      Object.keys(backup.fotos || {}).forEach(id => {
+        storageSet(`foto:${id}`, backup.fotos[id]);
+      });
+      Object.keys(fotoCache).forEach(k => delete fotoCache[k]);
+      showMsg('Backup importado.', false);
+      await carregar();
+    }catch(err){
+      showMsg('Não foi possível importar esse arquivo.', true);
+      console.error(err);
+    }
+  };
+  reader.readAsText(file);
+});
+
+carregar();
+</script>
+
+</body>
+</html>
