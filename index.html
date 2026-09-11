@@ -1,0 +1,772 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#0f4d2e">
+<title>Leitura - Imóveis Vagos</title>
+<style>
+html,body{margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f1f5f2;color:#17221b}
+*{box-sizing:border-box}
+header{background:#0f4d2e;color:#fff;text-align:center;padding:16px;font-weight:bold}
+main{max-width:700px;margin:auto;padding:12px}
+.card{background:#fff;border-radius:14px;padding:15px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+h2{font-size:18px;margin:0 0 8px}
+.help{font-size:13px;color:#66736a;margin-bottom:10px}
+label{display:block;font-weight:bold;margin:10px 0 5px}
+input[type=text],input[type=date],input[type=file]{width:100%;min-height:46px;border:1px solid #bcc8bf;border-radius:9px;padding:10px;font-size:16px;background:#fff}
+.stage-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;width:100%;margin:12px 0}
+.switch-row{display:flex;justify-content:space-between;align-items:center;margin:14px 0}
+.switch-label{font-weight:bold}
+.switch{width:54px;height:32px;accent-color:#198754;cursor:pointer}
+.switch:after{content:"";position:absolute;width:28px;height:28px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s}
+.switch.on{background:#198754}.switch.on:after{left:27px}
+.btn{width:100%;height:46px;border:0;border-radius:9px;margin-top:9px;font-size:16px;font-weight:bold}
+.green{background:#0f4d2e;color:#fff}.gray{background:#e3e9e5}.red{background:#b42318;color:#fff}
+.disabled{opacity:.4}
+.preview{display:none;margin-top:9px}
+.preview img{width:100%;max-height:300px;object-fit:contain;border-radius:9px;background:#eee}
+.record{border-top:1px solid #e2e7e3;padding:12px 0}
+.record:first-child{border-top:0}
+.tag{display:inline-block;background:#e7f2ea;color:#0f4d2e;padding:4px 7px;border-radius:12px;font-size:12px;font-weight:bold;margin:3px}
+@media(max-width:430px){.stage-grid{gap:6px}.stage-btn{height:43px;font-size:15px}}
+ .stage-radio{position:absolute;opacity:0;width:1px;height:1px}
+.stage-choice{display:flex;align-items:center;justify-content:center;height:45px;margin:0!important;padding:0;border:2px solid #0f4d2e;border-radius:9px;background:#fff;color:#0f4d2e;font-size:16px;font-weight:bold;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:rgba(15,77,46,.2)}
+.stage-radio:checked + .stage-choice{background:#0f4d2e;color:#fff;border-color:#08351e;box-shadow:0 0 0 3px #b7d8c2}
+.stage-choice:active{transform:scale(.96)}
+ .vacant-label{margin:0!important;font-weight:bold;font-size:16px;cursor:pointer;touch-action:manipulation;padding:8px 0}
+.vacant-checkbox{width:58px!important;height:34px!important;margin:0!important;appearance:none;-webkit-appearance:none;background:#aeb9b1;border:0!important;border-radius:20px;padding:0!important;position:relative;cursor:pointer;touch-action:manipulation}
+.vacant-checkbox:before{content:"";position:absolute;width:28px;height:28px;left:3px;top:3px;border-radius:50%;background:#fff;transition:left .18s}
+.vacant-checkbox:checked{background:#198754}
+.vacant-checkbox:checked:before{left:27px}
+.vacant-checkbox:focus{outline:none;box-shadow:0 0 0 3px #b7d8c2}
+
+.progressive-readings .reading-row{display:none;margin-top:8px}
+.progressive-readings .reading-row:first-child{display:block}
+.progressive-readings .reading-row label{margin:0 0 5px}
+.progressive-readings .reading-input{margin:0}
+</style>
+</head>
+<body>
+<header>Leitura - Imóveis Vagos</header>
+<main>
+
+<section class="card">
+<h2>Etapa da leitura</h2>
+<div class="help">Selecione uma etapa:</div>
+
+<div id="stageGrid" class="stage-grid">
+<input class="stage-radio" type="radio" name="etapa" id="etapa1" value="1">
+<label class="stage-choice" for="etapa1">1</label>
+<input class="stage-radio" type="radio" name="etapa" id="etapa2" value="2">
+<label class="stage-choice" for="etapa2">2</label>
+<input class="stage-radio" type="radio" name="etapa" id="etapa3" value="3">
+<label class="stage-choice" for="etapa3">3</label>
+<input class="stage-radio" type="radio" name="etapa" id="etapa4" value="4">
+<label class="stage-choice" for="etapa4">4</label>
+<input class="stage-radio" type="radio" name="etapa" id="etapa5" value="5">
+<label class="stage-choice" for="etapa5">5</label>
+<input class="stage-radio" type="radio" name="etapa" id="etapa6" value="6">
+<label class="stage-choice" for="etapa6">6</label>
+<input class="stage-radio" type="radio" name="etapa" id="etapa7" value="7">
+<label class="stage-choice" for="etapa7">7</label>
+<input class="stage-radio" type="radio" name="etapa" id="etapa8" value="8">
+<label class="stage-choice" for="etapa8">8</label>
+<input class="stage-radio" type="radio" name="etapa" id="etapa9" value="9">
+<label class="stage-choice" for="etapa9">9</label>
+<input class="stage-radio" type="radio" name="etapa" id="etapa10" value="10">
+<label class="stage-choice" for="etapa10">10</label>
+<input class="stage-radio" type="radio" name="etapa" id="etapa11" value="11">
+<label class="stage-choice" for="etapa11">11</label>
+<input class="stage-radio" type="radio" name="etapa" id="etapa12" value="12">
+<label class="stage-choice" for="etapa12">12</label>
+<input class="stage-radio" type="radio" name="etapa" id="etapa13" value="13">
+<label class="stage-choice" for="etapa13">13</label>
+<input class="stage-radio" type="radio" name="etapa" id="etapa14" value="14">
+<label class="stage-choice" for="etapa14">14</label>
+<input class="stage-radio" type="radio" name="etapa" id="etapa15" value="15">
+<label class="stage-choice" for="etapa15">15</label>
+<input class="stage-radio" type="radio" name="etapa" id="etapa16" value="16">
+<label class="stage-choice" for="etapa16">16</label>
+<input class="stage-radio" type="radio" name="etapa" id="etapa17" value="17">
+<label class="stage-choice" for="etapa17">17</label>
+<input class="stage-radio" type="radio" name="etapa" id="etapa18" value="18">
+<label class="stage-choice" for="etapa18">18</label>
+</div>
+
+<label for="endereco">Endereço</label>
+<input id="endereco" type="text" placeholder="Digite o endereço">
+
+<label for="numero">Número</label>
+<input id="numero" type="text" inputmode="numeric" placeholder="Número do imóvel">
+
+<label for="medidor">Número do medidor</label>
+<input id="medidor" type="text" placeholder="Digite o número do medidor">
+
+<label>Leitura</label>
+<div id="readingsList" class="progressive-readings">
+  <div class="reading-row" data-reading="0"><label for="leituraCampo0">Leitura 1</label><input id="leituraCampo0" class="reading-input" type="text" inputmode="decimal" placeholder="Digite a leitura"></div>
+  <div class="reading-row" data-reading="1"><label for="leituraCampo1">Leitura 2</label><input id="leituraCampo1" class="reading-input" type="text" inputmode="decimal" placeholder="Digite a leitura"></div>
+  <div class="reading-row" data-reading="2"><label for="leituraCampo2">Leitura 3</label><input id="leituraCampo2" class="reading-input" type="text" inputmode="decimal" placeholder="Digite a leitura"></div>
+  <div class="reading-row" data-reading="3"><label for="leituraCampo3">Leitura 4</label><input id="leituraCampo3" class="reading-input" type="text" inputmode="decimal" placeholder="Digite a leitura"></div>
+  <div class="reading-row" data-reading="4"><label for="leituraCampo4">Leitura 5</label><input id="leituraCampo4" class="reading-input" type="text" inputmode="decimal" placeholder="Digite a leitura"></div>
+  <div class="reading-row" data-reading="5"><label for="leituraCampo5">Leitura 6</label><input id="leituraCampo5" class="reading-input" type="text" inputmode="decimal" placeholder="Digite a leitura"></div>
+  <div class="reading-row" data-reading="6"><label for="leituraCampo6">Leitura 7</label><input id="leituraCampo6" class="reading-input" type="text" inputmode="decimal" placeholder="Digite a leitura"></div>
+  <div class="reading-row" data-reading="7"><label for="leituraCampo7">Leitura 8</label><input id="leituraCampo7" class="reading-input" type="text" inputmode="decimal" placeholder="Digite a leitura"></div>
+  <div class="reading-row" data-reading="8"><label for="leituraCampo8">Leitura 9</label><input id="leituraCampo8" class="reading-input" type="text" inputmode="decimal" placeholder="Digite a leitura"></div>
+  <div class="reading-row" data-reading="9"><label for="leituraCampo9">Leitura 10</label><input id="leituraCampo9" class="reading-input" type="text" inputmode="decimal" placeholder="Digite a leitura"></div>
+</div>
+
+<label for="data">Data</label>
+<input id="data" type="date">
+
+<div class="switch-row">
+  <label class="vacant-label" for="vacant">Imóvel desocupado</label>
+  <input id="vacant" class="vacant-checkbox" type="checkbox">
+</div>
+
+<label>Foto do medidor</label>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+<label for="cameraInput" class="btn green" style="margin-top:0;display:flex;align-items:center;justify-content:center;cursor:pointer">📷 Câmera</label>
+<label for="galleryInput" class="btn gray" style="margin-top:0;display:flex;align-items:center;justify-content:center;cursor:pointer">🖼️ Galeria</label>
+</div>
+<input id="cameraInput" type="file" accept="image/*" capture="environment" style="position:absolute;width:1px;height:1px;opacity:0">
+<input id="galleryInput" type="file" accept="image/*" style="position:absolute;width:1px;height:1px;opacity:0">
+
+<div id="photoList" style="display:grid;gap:10px;margin-top:10px"></div>
+<div id="photoTools" style="display:none;gap:8px;grid-template-columns:1fr 1fr">
+<button id="cropBtn" type="button" class="btn gray" style="margin-top:8px">✂️ Recortar última</button>
+<button id="shareBtn" type="button" class="btn green" style="margin-top:8px">📤 Compartilhar</button>
+</div>
+
+<div id="cropPanel" style="display:none;margin-top:10px">
+<div style="font-weight:bold;margin-bottom:6px">Arraste na foto para escolher o recorte</div>
+<canvas id="cropCanvas" style="width:100%;border:2px solid #0f4d2e;border-radius:8px;touch-action:none;background:#222"></canvas>
+<div style="display:flex;gap:8px">
+<button id="applyCrop" type="button" class="btn green">Aplicar</button>
+<button id="cancelCrop" type="button" class="btn gray">Cancelar</button>
+</div>
+</div>
+
+<button id="save" type="button" class="btn green">Salvar registro</button>
+<button id="clear" type="button" class="btn gray">Limpar</button>
+</section>
+
+<section class="card">
+<h2>Registros salvos</h2>
+<div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+  <span id="recordsFilter" style="font-size:13px;color:#66736a">Selecione uma etapa para ver seus registros.</span>
+  <button id="showAll" type="button" class="btn gray" style="width:auto;padding:0 12px;margin:0;height:38px">Todos</button>
+</div>
+<div id="records"></div>
+</section>
+
+<section class="card">
+<h2>Backup</h2>
+<button id="export" type="button" class="btn gray">Exportar backup</button>
+<input id="import" type="file" accept=".json,application/json" style="margin-top:10px">
+</section>
+
+</main>
+<footer style="text-align:center;padding:8px 12px 22px;color:#66736a;font-size:12px">
+Criado por Luís Ricardo
+</footer>
+
+<script>
+(function(){
+"use strict";
+
+var ETAPAS="app_etapas_v4";
+var REGISTROS="app_registros_v4";
+var etapaAtual=0;
+var dadosEtapas={};
+var registros=[];
+var fotosAtuais=[];
+var fotoAtual=null;
+var leiturasAtuais=[];
+var desocupado=false;
+var mostrarTodos=false;
+window.mostrarTodos=false;
+
+var data=document.getElementById("data");
+var endereco=document.getElementById("endereco");
+var numero=document.getElementById("numero");
+var medidor=document.getElementById("medidor");
+var vacant=document.getElementById("vacant");
+var records=document.getElementById("records");
+
+var cameraInput=document.getElementById("cameraInput");
+var galleryInput=document.getElementById("galleryInput");
+var photoList=document.getElementById("photoList");
+var photoTools=document.getElementById("photoTools");
+var readingsList=document.getElementById("readingsList");
+var cropBtn=document.getElementById("cropBtn");
+var shareBtn=document.getElementById("shareBtn");
+var cropPanel=document.getElementById("cropPanel");
+var cropCanvas=document.getElementById("cropCanvas");
+var applyCrop=document.getElementById("applyCrop");
+var cancelCrop=document.getElementById("cancelCrop");
+
+function hoje(){
+ var d=new Date();
+ function z(n){return n<10?"0"+n:n;}
+ return d.getFullYear()+"-"+z(d.getMonth()+1)+"-"+z(d.getDate());
+}
+
+function guardarEtapas(){
+ try{localStorage.setItem(ETAPAS,JSON.stringify(dadosEtapas));}catch(e){}
+}
+
+function guardarEtapaAtual(){
+ if(!etapaAtual)return;
+ dadosEtapas[String(etapaAtual)]={
+  endereco:endereco.value,
+  numero:numero.value,
+  medidor:medidor.value,
+  leituras:leiturasAtuais.slice(),
+  leitura:leiturasAtuais[0]||"",
+  data:data.value,
+  desocupado:desocupado,
+  fotos:fotosAtuais.slice(),
+  foto:fotosAtuais[0]||null
+ };
+ guardarEtapas();
+}
+
+function renderLeituras(){
+ var rows=readingsList.querySelectorAll(".reading-row");
+ var ultimo=0;
+ for(var i=0;i<10;i++){
+  if(String(leiturasAtuais[i]||"").trim()!=="")ultimo=i;
+ }
+ if(!leiturasAtuais.length)leiturasAtuais=[""];
+ for(var j=0;j<rows.length;j++){
+  var row=rows[j];
+  var inp=document.getElementById("leituraCampo"+j);
+  if(!inp)continue;
+  inp.value=leiturasAtuais[j]||"";
+  row.style.display=(j===0 || j<=ultimo+1)?"block":"none";
+  inp.disabled=!!desocupado;
+  inp.style.opacity=desocupado?".45":"1";
+  if(!inp.dataset.ligado){
+   inp.dataset.ligado="1";
+   inp.addEventListener("input",function(){
+    var idx=Number(this.id.replace("leituraCampo",""));
+    leiturasAtuais[idx]=this.value;
+    if(this.value.trim()!=="" && idx<9 && !desocupado){
+     if(leiturasAtuais.length<=idx+1)leiturasAtuais.push("");
+     var proxima=document.getElementById("leituraCampo"+(idx+1));
+     var proximaRow=proxima?proxima.closest(".reading-row"):null;
+     if(proximaRow)proximaRow.style.display="block";
+     setTimeout(function(){if(proxima)proxima.focus();},30);
+    }
+    guardarEtapaAtual();
+   });
+   inp.addEventListener("change",function(){
+    var idx=Number(this.id.replace("leituraCampo",""));
+    leiturasAtuais[idx]=this.value;
+    guardarEtapaAtual();
+   });
+  }
+ }
+}
+
+function renderFotos(){
+ photoList.innerHTML="";
+ if(!fotosAtuais.length){
+  photoTools.style.display="none";
+  return;
+ }
+ photoTools.style.display="grid";
+ fotosAtuais.forEach(function(src,i){
+  var box=document.createElement("div");
+  box.style.position="relative";
+
+  var img=document.createElement("img");
+  img.src=src;
+  img.alt="Foto do medidor "+(i+1);
+  img.style.width="100%";
+  img.style.maxHeight="300px";
+  img.style.objectFit="contain";
+  img.style.borderRadius="9px";
+  img.style.background="#eee";
+
+  var del=document.createElement("button");
+  del.type="button";
+  del.textContent="🗑️ Excluir foto "+(i+1);
+  del.className="btn red";
+  del.style.marginTop="5px";
+  del.addEventListener("click",function(){
+   fotosAtuais.splice(i,1);
+   fotoAtual=fotosAtuais[fotosAtuais.length-1]||null;
+   renderFotos();
+   guardarEtapaAtual();
+  });
+
+  box.appendChild(img);
+  box.appendChild(del);
+  photoList.appendChild(box);
+ });
+}
+
+function aplicarEstado(){
+ renderLeituras();
+ vacant.checked=desocupado;
+ renderFotos();
+ var leituraInputs=readingsList.querySelectorAll("input");
+ leituraInputs.forEach(function(inp){
+  inp.disabled=desocupado;
+  inp.style.opacity=desocupado?".45":"1";
+ });
+}
+
+function carregarEtapa(n){
+ etapaAtual=n;
+ var d=dadosEtapas[String(n)]||{};
+ endereco.value=d.endereco||"";
+ numero.value=d.numero||"";
+ medidor.value=d.medidor||"";
+ leiturasAtuais=Array.isArray(d.leituras)?d.leituras.slice():(d.leitura?[d.leitura]:[""]);
+ if(!leiturasAtuais.length)leiturasAtuais=[""];
+ data.value=d.data||hoje();
+ desocupado=d.desocupado===true;
+ fotosAtuais=Array.isArray(d.fotos)?d.fotos.slice():(d.foto?[d.foto]:[]);
+ fotoAtual=fotosAtuais[fotosAtuais.length-1]||null;
+ aplicarEstado();
+}
+
+document.querySelectorAll(".stage-radio").forEach(function(radio){
+ radio.addEventListener("change",function(){
+  if(!radio.checked)return;
+  guardarEtapaAtual();
+  carregarEtapa(Number(radio.value));
+  window.mostrarTodos=false;
+  render();
+ });
+});
+
+vacant.addEventListener("change",function(){
+ desocupado=vacant.checked;
+ readingsList.querySelectorAll("input").forEach(function(inp){
+  inp.disabled=desocupado;
+  inp.style.opacity=desocupado?".45":"1";
+ });
+ guardarEtapaAtual();
+});
+
+[endereco,numero,medidor].forEach(function(el){
+ el.addEventListener("input",guardarEtapaAtual);
+});
+data.addEventListener("change",guardarEtapaAtual);
+
+function mostrarFoto(dataUrl){
+ if(!etapaAtual){
+  alert("Selecione primeiro uma etapa de 1 a 18.");
+  return;
+ }
+ fotosAtuais.push(dataUrl);
+ fotoAtual=dataUrl;
+ renderFotos();
+ guardarEtapaAtual();
+}
+
+function lerFoto(input){
+ if(!etapaAtual){
+  alert("Selecione primeiro uma etapa de 1 a 18.");
+  input.value="";
+  return;
+ }
+ var f=input.files && input.files[0];
+ if(!f)return;
+ if(!f.type || f.type.indexOf("image/")!==0){
+  alert("Selecione uma imagem.");
+  input.value="";
+  return;
+ }
+ var reader=new FileReader();
+ reader.onload=function(){
+  mostrarFoto(reader.result);
+  input.value="";
+ };
+ reader.onerror=function(){
+  alert("Não foi possível abrir a foto.");
+  input.value="";
+ };
+ reader.readAsDataURL(f);
+}
+
+/* CÂMERA E GALERIA: os botões acionam diretamente o input nativo do iPhone */
+
+cameraInput.addEventListener("change",function(){
+ if(!etapaAtual){
+  alert("Selecione primeiro uma etapa de 1 a 18.");
+  cameraInput.value="";
+  return;
+ }
+ lerFoto(cameraInput);
+});
+
+galleryInput.addEventListener("change",function(){
+ if(!etapaAtual){
+  alert("Selecione primeiro uma etapa de 1 a 18.");
+  galleryInput.value="";
+  return;
+ }
+ lerFoto(galleryInput);
+});
+
+/* RECORTE */
+var cropImg=null,cx=0,cy=0,cw=0,ch=0,arrastando=false;
+
+cropBtn.addEventListener("click",function(){
+ if(!fotosAtuais.length){
+  alert("Primeiro tire ou escolha uma foto.");
+  return;
+ }
+ cropImg=new Image();
+ cropImg.onload=function(){
+  var max=1200;
+  var scale=Math.min(1,max/cropImg.width,max/cropImg.height);
+  cropCanvas.width=Math.max(1,Math.round(cropImg.width*scale));
+  cropCanvas.height=Math.max(1,Math.round(cropImg.height*scale));
+  var ctx=cropCanvas.getContext("2d");
+  ctx.clearRect(0,0,cropCanvas.width,cropCanvas.height);
+  ctx.drawImage(cropImg,0,0,cropCanvas.width,cropCanvas.height);
+  cx=cy=cw=ch=0;
+  cropPanel.style.display="block";
+ };
+ cropImg.onerror=function(){alert("Não foi possível preparar a foto para recorte.");};
+ cropImg.src=fotosAtuais[fotosAtuais.length-1];
+});
+
+function ponto(e){
+ var r=cropCanvas.getBoundingClientRect();
+ var t=e.touches ? e.touches[0] : e;
+ var sx=cropCanvas.width/r.width;
+ var sy=cropCanvas.height/r.height;
+ return {
+  x:Math.max(0,Math.min(cropCanvas.width,(t.clientX-r.left)*sx)),
+  y:Math.max(0,Math.min(cropCanvas.height,(t.clientY-r.top)*sy))
+ };
+}
+
+function desenharRecorte(){
+ if(!cropImg)return;
+ var ctx=cropCanvas.getContext("2d");
+ ctx.clearRect(0,0,cropCanvas.width,cropCanvas.height);
+ ctx.drawImage(cropImg,0,0,cropCanvas.width,cropCanvas.height);
+ var x=cw<0?cx+cw:cx;
+ var y=ch<0?cy+ch:cy;
+ var w=Math.abs(cw);
+ var h=Math.abs(ch);
+ if(w>2&&h>2){
+  ctx.save();
+  ctx.fillStyle="rgba(0,0,0,.45)";
+  ctx.fillRect(0,0,cropCanvas.width,cropCanvas.height);
+  ctx.clearRect(x,y,w,h);
+  ctx.drawImage(cropImg,
+   x*(cropImg.width/cropCanvas.width),
+   y*(cropImg.height/cropCanvas.height),
+   w*(cropImg.width/cropCanvas.width),
+   h*(cropImg.height/cropCanvas.height),
+   x,y,w,h);
+  ctx.strokeStyle="#fff";
+  ctx.lineWidth=3;
+  ctx.strokeRect(x,y,w,h);
+  ctx.restore();
+ }
+}
+
+function inicio(e){
+ e.preventDefault();
+ var p=ponto(e);
+ cx=p.x;cy=p.y;cw=0;ch=0;arrastando=true;
+}
+
+function movimento(e){
+ if(!arrastando)return;
+ e.preventDefault();
+ var p=ponto(e);
+ cw=p.x-cx;ch=p.y-cy;
+ desenharRecorte();
+}
+
+function fim(){
+ arrastando=false;
+}
+
+cropCanvas.addEventListener("mousedown",inicio);
+cropCanvas.addEventListener("mousemove",movimento);
+window.addEventListener("mouseup",fim);
+cropCanvas.addEventListener("touchstart",inicio,{passive:false});
+cropCanvas.addEventListener("touchmove",movimento,{passive:false});
+cropCanvas.addEventListener("touchend",fim,{passive:false});
+
+applyCrop.addEventListener("click",function(){
+ if(!cropImg)return;
+ var x=cw<0?cx+cw:cx;
+ var y=ch<0?cy+ch:cy;
+ var w=Math.abs(cw);
+ var h=Math.abs(ch);
+ if(w<10||h<10){
+  alert("Arraste sobre a foto para selecionar o recorte.");
+  return;
+ }
+ var sx=cropImg.width/cropCanvas.width;
+ var sy=cropImg.height/cropCanvas.height;
+ var c=document.createElement("canvas");
+ c.width=Math.max(1,Math.round(w*sx));
+ c.height=Math.max(1,Math.round(h*sy));
+ c.getContext("2d").drawImage(cropImg,x*sx,y*sy,w*sx,h*sy,0,0,c.width,c.height);
+ mostrarFoto(c.toDataURL("image/jpeg",.92));
+ cropPanel.style.display="none";
+});
+
+cancelCrop.addEventListener("click",function(){
+ cropPanel.style.display="none";
+});
+
+/* COMPARTILHAR: cria uma cópia da foto com endereço e número escritos */
+shareBtn.addEventListener("click",function(){
+ if(!fotosAtuais.length){
+  alert("Não há foto para compartilhar.");
+  return;
+ }
+ var img=new Image();
+ img.onload=function(){
+  var c=document.createElement("canvas");
+  var max=1600;
+  var s=Math.min(1,max/img.width,max/img.height);
+  c.width=Math.max(1,Math.round(img.width*s));
+  c.height=Math.max(1,Math.round(img.height*s));
+  var ctx=c.getContext("2d");
+  ctx.drawImage(img,0,0,c.width,c.height);
+
+  var texto=(endereco.value||"").trim();
+  if(numero.value.trim()) texto+=(texto?" - ":"")+"Nº "+numero.value.trim();
+  if(!texto) texto="Etapa "+etapaAtual;
+
+  var fs=Math.max(18,Math.round(c.width/30));
+  ctx.font="bold "+fs+"px Arial";
+  while(fs>12 && ctx.measureText(texto).width>c.width-40){
+   fs--;
+   ctx.font="bold "+fs+"px Arial";
+  }
+  var h=fs+28;
+  ctx.fillStyle="rgba(0,0,0,.68)";
+  ctx.fillRect(0,c.height-h,c.width,h);
+  ctx.fillStyle="#fff";
+  ctx.fillText(texto,14,c.height-10);
+
+  c.toBlob(function(blob){
+   if(!blob){
+    alert("Não foi possível preparar a imagem.");
+    return;
+   }
+   var file=new File([blob],"medidor-etapa-"+etapaAtual+".jpg",{type:"image/jpeg"});
+
+   if(navigator.share){
+    var podeCompartilhar=true;
+    try{
+     if(navigator.canShare) podeCompartilhar=navigator.canShare({files:[file]});
+    }catch(e){podeCompartilhar=false;}
+
+    if(podeCompartilhar){
+     navigator.share({
+      title:"Medidor - Etapa "+etapaAtual,
+      text:texto,
+      files:[file]
+     }).catch(function(err){
+      if(err && err.name!=="AbortError"){
+       baixarImagem(blob,file.name);
+      }
+     });
+     return;
+    }
+   }
+   baixarImagem(blob,file.name);
+  },"image/jpeg",.92);
+ };
+ img.src=fotosAtuais[fotosAtuais.length-1];
+});
+
+function baixarImagem(blob,nome){
+ var u=URL.createObjectURL(blob);
+ var a=document.createElement("a");
+ a.href=u;
+ a.download=nome;
+ document.body.appendChild(a);
+ a.click();
+ a.remove();
+ setTimeout(function(){URL.revokeObjectURL(u);},1500);
+}
+
+/* SALVAR */
+document.getElementById("save").addEventListener("click",function(){
+ if(!etapaAtual){alert("Selecione uma etapa de 1 a 18.");return;}
+ if(!endereco.value.trim()){alert("Digite o endereço.");return;}
+ if(!medidor.value.trim()){alert("Digite o número do medidor.");return;}
+ if(!desocupado&&!leiturasAtuais.some(function(v){return String(v||"").trim();})){alert("Digite pelo menos uma leitura ou marque imóvel desocupado.");return;}
+
+ guardarEtapaAtual();
+
+ registros.unshift({
+  id:Date.now(),
+  etapa:etapaAtual,
+  data:data.value,
+  endereco:endereco.value.trim(),
+  numero:numero.value.trim(),
+  medidor:medidor.value.trim(),
+  leituras:desocupado?[]:leiturasAtuais.filter(function(v){return String(v||"").trim();}),
+  leitura:desocupado?"":leiturasAtuais.filter(function(v){return String(v||"").trim();}).join(" / "),
+  desocupado:desocupado,
+  fotos:fotosAtuais.slice(),
+  foto:fotosAtuais[0]||null
+ });
+
+ localStorage.setItem(REGISTROS,JSON.stringify(registros));
+ render();
+ alert("Registro salvo.");
+});
+
+/* LIMPAR */
+document.getElementById("clear").addEventListener("click",function(){
+ etapaAtual=0;
+ dadosEtapas={};
+ fotoAtual=null;
+ fotosAtuais=[];
+ leiturasAtuais=[""];
+ desocupado=false;
+ localStorage.removeItem(ETAPAS);
+
+ data.value=hoje();
+ endereco.value="";
+ numero.value="";
+ medidor.value="";
+ leiturasAtuais=[""];
+ renderLeituras();
+ vacant.checked=false;
+
+ cameraInput.value="";
+ galleryInput.value="";
+ fotosAtuais=[];
+ fotoAtual=null;
+ photoList.innerHTML="";
+ photoTools.style.display="none";
+ cropPanel.style.display="none";
+
+ document.querySelectorAll(".stage-radio").forEach(function(r){r.checked=false;});
+});
+
+/* REGISTROS */
+function esc(v){
+ return String(v==null?"":v).replace(/[&<>"']/g,function(c){
+  return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];
+ });
+}
+
+function render(){
+ var filtro=document.getElementById("recordsFilter");
+ var showAll=document.getElementById("showAll");
+ var lista=(window.mostrarTodos===true || !etapaAtual)
+   ? registros
+   : registros.filter(function(r){return Number(r.etapa)===Number(etapaAtual);});
+
+ if(filtro){
+  filtro.textContent = (window.mostrarTodos===true || !etapaAtual)
+    ? "Todos os registros"
+    : "Registros da etapa "+etapaAtual;
+ }
+ if(showAll){
+  showAll.textContent = (window.mostrarTodos===true || !etapaAtual) ? "Etapa atual" : "Todos";
+ }
+
+ if(!lista.length){
+  records.innerHTML='<span style="font-size:13px;color:#66736a">'+
+   (etapaAtual && window.mostrarTodos!==true
+    ? "Nenhum registro salvo nesta etapa."
+    : "Nenhum registro salvo.")+
+   '</span>';
+  return;
+ }
+
+ records.innerHTML="";
+ lista.forEach(function(r){
+  var div=document.createElement("div");
+  div.className="record";
+  div.innerHTML=
+   "<b>"+esc(r.endereco)+(r.numero?" - "+esc(r.numero):"")+"</b>"+
+   '<span class="tag">Etapa '+esc(r.etapa)+'</span>'+
+   '<span class="tag">'+(r.data?r.data.split("-").reverse().join("/"):"")+"</span>"+
+   "<div>Medidor: <b>"+esc(r.medidor)+"</b></div>"+
+   (r.desocupado?"<div><b>Imóvel desocupado</b></div>":
+    '<div>Leitura'+((r.leituras&&r.leituras.length>1)?"s":"")+': <b>'+
+    esc((r.leituras&&r.leituras.length)?r.leituras.join(" / "):r.leitura)+'</b></div>')+
+   (r.fotos&&r.fotos.length?
+    '<div style="display:grid;gap:8px;margin-top:8px">'+r.fotos.map(function(f,i){
+      return '<img src="'+f+'" alt="Foto '+(i+1)+'" style="width:100%;max-height:300px;object-fit:contain;border-radius:9px;background:#eee">';
+    }).join("")+'</div>':
+    (r.foto?'<div class="preview" style="display:block"><img src="'+r.foto+'"></div>':""))+
+   '<button type="button" class="btn red" data-del="'+r.id+'">Excluir</button>';
+  records.appendChild(div);
+ });
+
+ records.querySelectorAll("[data-del]").forEach(function(btn){
+  btn.addEventListener("click",function(){
+   if(confirm("Excluir este registro?")){
+    registros=registros.filter(function(r){return String(r.id)!==String(btn.dataset.del);});
+    localStorage.setItem(REGISTROS,JSON.stringify(registros));
+    render();
+   }
+  });
+ });
+}
+
+document.getElementById("showAll").addEventListener("click",function(){
+ window.mostrarTodos=!window.mostrarTodos;
+ render();
+});
+
+/* BACKUP */
+document.getElementById("export").addEventListener("click",function(){
+ var blob=new Blob([JSON.stringify({registros:registros,etapas:dadosEtapas})],{type:"application/json"});
+ baixarImagem(blob,"backup-imoveis-vagos.json");
+});
+
+document.getElementById("import").addEventListener("change",function(e){
+ var f=e.target.files[0];
+ if(!f)return;
+ var r=new FileReader();
+ r.onload=function(){
+  try{
+   var x=JSON.parse(r.result);
+   registros=x.registros||[];
+   dadosEtapas=x.etapas||{};
+   localStorage.setItem(REGISTROS,JSON.stringify(registros));
+   guardarEtapas();
+   render();
+   alert("Backup importado.");
+  }catch(err){
+   alert("Backup inválido.");
+  }
+ };
+ r.readAsText(f);
+});
+
+/* INÍCIO */
+try{registros=JSON.parse(localStorage.getItem(REGISTROS)||"[]");}
+catch(e){registros=[];}
+
+try{dadosEtapas=JSON.parse(localStorage.getItem(ETAPAS)||"{}");}
+catch(e){dadosEtapas={};}
+
+data.value=hoje();
+leiturasAtuais=[""];
+renderLeituras();
+render();
+
+})();
+</script>
+</body>
+</html>
